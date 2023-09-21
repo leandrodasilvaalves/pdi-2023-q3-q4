@@ -1,0 +1,18 @@
+using System.Text.RegularExpressions;
+using Shared.Contracts;
+using Shared.Contracts.Validations;
+using Shared.Models;
+
+namespace Shared.Validations.Rules
+{
+    public class OwnerDocumentRule : Rule<Owner>
+    {
+        public override void Apply(Owner owner)
+        {
+            if (!Regex.IsMatch(owner.Document, @"^[0-9]{11}$", RegexOptions.Compiled))
+            {
+                Error = KnownErrors.INVALID_OWNER_DOCUMENT;
+            }
+        }
+    }
+}
