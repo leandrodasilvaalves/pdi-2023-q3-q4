@@ -10,6 +10,6 @@ namespace Shared.Contracts.Validations
 
     public interface IRule<TObject> : IRule where TObject : class
     {
-        void Apply(TObject instance);
+        Task Apply(TObject instance);
     }
 }

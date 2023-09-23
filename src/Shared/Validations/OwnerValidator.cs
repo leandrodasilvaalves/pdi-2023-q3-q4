@@ -9,7 +9,7 @@ namespace Shared.Validations
 
     public class OwnerValidator : AbstractValidator<Owner>, IOwnerValidator
     {
-        public override void RegisterRules()
+        protected override void RegisterRules()
         {
             AddRule(new OwnerNameRule());
             AddRule(new OwnerPhoneRule());

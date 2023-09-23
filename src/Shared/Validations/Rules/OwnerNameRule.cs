@@ -7,12 +7,13 @@ namespace Shared.Validations.Rules
 {
     public class OwnerNameRule : Rule<Owner>
     {
-        public override void Apply(Owner owner)
+        public override Task Apply(Owner owner)
         {
             if (!Regex.IsMatch(owner.Name, @"^[\p{L}\s]{5,50}$", RegexOptions.Compiled))
             {
                 Error = KnownErrors.INVALID_OWNER_NAME;
             }
+            return Task.CompletedTask;
         }
     }
 }

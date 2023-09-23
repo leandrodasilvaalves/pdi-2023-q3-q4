@@ -5,7 +5,6 @@ namespace Shared.Contracts.Validations
         IReadOnlyCollection<Error> Errors { get; }
         bool IsValid { get; }
         bool IsFailure { get; }
-        void RegisterRules();
-        AbstractValidator<T> Validate(T model);
+        Task<AbstractValidator<T>> Validate(T model);
     }
 }

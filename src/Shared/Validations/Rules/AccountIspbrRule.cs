@@ -7,12 +7,13 @@ namespace Shared.Validations.Rules
 {
     public class AccountIspbrRule : Rule<Account>
     {
-        public override void Apply(Account account)
+        public override Task Apply(Account account)
         {
             if (!Regex.IsMatch(account.Ispb, @"^[0-9]{8}$", RegexOptions.Compiled))
             {                
                 Error = KnownErrors.INVALID_ISPB;
             }
+            return Task.CompletedTask;
         }
     }
 }

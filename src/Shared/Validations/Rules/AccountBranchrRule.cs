@@ -7,12 +7,13 @@ namespace Shared.Validations.Rules
 {
     public class AccountBranchrRule : Rule<Account>
     {
-        public override void Apply(Account account)
+        public override Task Apply(Account account)
         {
             if (!Regex.IsMatch(account.Branch, @"^[0-9]{4}$", RegexOptions.Compiled))
             {                
                 Error = KnownErrors.INVALID_ACCOUNT_BRANCH;
             }
+            return Task.CompletedTask;
         }
     }
 }

@@ -4,6 +4,7 @@ using Shared.Contracts;
 using Shared.Contracts.Options;
 using Shared.Repositories;
 using Shared.Validations;
+using Shared.Validations.Rules;
 
 namespace Shared.Extensions
 {
@@ -23,8 +24,15 @@ namespace Shared.Extensions
 
         public static IServiceCollection AddValidators(this IServiceCollection services)
         {
+            services.AddAsyncRules();
             services.AddScoped<IAccountValidator, AccountValidator>();
             services.AddScoped<IOwnerValidator, OwnerValidator>();
+            return services;
+        }
+
+        private static IServiceCollection AddAsyncRules(this IServiceCollection services)
+        {
+            services.AddScoped<IDocumentAlreadyRegisteredForThisBank, DocumentAlreadyRegisteredForThisBank>();
             return services;
         }
     }

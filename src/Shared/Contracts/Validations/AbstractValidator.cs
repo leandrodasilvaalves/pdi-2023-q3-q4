@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using Shared.Extensions;
 
 namespace Shared.Contracts.Validations
 {
@@ -19,30 +20,31 @@ namespace Shared.Contracts.Validations
         public bool IsValid => !IsFailure;
         public bool IsFailure => _errors?.Any() ?? false;
 
-        public abstract void RegisterRules();
+        protected abstract void RegisterRules();
 
-        public virtual AbstractValidator<T> Validate(T model)
+        public virtual async Task<AbstractValidator<T>> Validate(T model)
         {
-            ClearErrors();
-            foreach (var rule in _rules)
+            ClearErrors();           
+            await Parallel.ForEachAsync(_rules, async (rule, ct) =>
             {
                 var castedRule = ((IRule<T>)rule);
-                castedRule.Apply(model);
+                await castedRule.Apply(model);
+                castedRule.Error.LogJson("parallel");
                 AddError(castedRule.Error);
-            }
+            });
             return this;
         }
 
-        protected void AddError(Error error) 
+        protected void AddError(Error error)
         {
-            if(error is not null)
+            if (error is not null)
             {
                 _errors.Add(error);
             }
         }
         protected void AddErrors(IEnumerable<Error> erros)
         {
-            if(erros.Any())
+            if (erros.Any())
             {
                 _errors.AddRange(erros);
             }

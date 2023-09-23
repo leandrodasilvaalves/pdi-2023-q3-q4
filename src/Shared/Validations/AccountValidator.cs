@@ -4,26 +4,41 @@ using Shared.Validations.Rules;
 
 namespace Shared.Validations
 {
-    public interface IAccountValidator: IAbstractValidator<Account>
-    {}
+    public interface IAccountValidator : IAbstractValidator<Account>
+    { }
 
     public class AccountValidator : AbstractValidator<Account>, IAccountValidator
     {
-        public AccountValidator(IOwnerValidator ownerValidator) => OwnerValidator = ownerValidator;
+        private readonly IDocumentAlreadyRegisteredForThisBank _documentAlreadyRegisteredForThisBank;
+        private readonly IOwnerValidator _ownerValidator;
 
-        private IOwnerValidator OwnerValidator { get; }
+        public AccountValidator(
+            IDocumentAlreadyRegisteredForThisBank documentAlreadyRegisteredForThisBank,
+            IOwnerValidator ownerValidator)
+        {
+            _documentAlreadyRegisteredForThisBank = documentAlreadyRegisteredForThisBank
+                ?? throw new ArgumentNullException(nameof(documentAlreadyRegisteredForThisBank));
 
-        public override void RegisterRules()
+            _ownerValidator = ownerValidator ?? throw new ArgumentNullException(nameof(ownerValidator));
+            RegisterAsyncRules();
+        }
+
+        protected override void RegisterRules()
         {
             AddRule(new AccountBranchrRule());
             AddRule(new AccountNumberRule());
             AddRule(new AccountIspbrRule());
         }
 
-        public override AbstractValidator<Account> Validate(Account model)
+        private void RegisterAsyncRules()
         {
-            base.Validate(model);
-            AddErrors(OwnerValidator.Validate(model.Owner).Errors);
+            AddRule(_documentAlreadyRegisteredForThisBank);
+        }
+
+        public override async Task<AbstractValidator<Account>> Validate(Account model)
+        {
+            await Task.WhenAll(base.Validate(model), _ownerValidator.Validate(model.Owner));
+            AddErrors(_ownerValidator.Errors);
             return this;
         }
     }

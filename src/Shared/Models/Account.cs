@@ -2,7 +2,7 @@ using Shared.Enum;
 
 namespace Shared.Models
 {
-    public class Account
+    public class Account : BaseModel
     {
         public string Branch { get; set; }
         public string Number { get; set; }
