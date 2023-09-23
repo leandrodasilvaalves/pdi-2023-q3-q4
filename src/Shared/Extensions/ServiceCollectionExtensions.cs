@@ -28,6 +28,7 @@ namespace Shared.Extensions
             services.AddAsyncRules();
             services.AddScoped<IAccountValidator, AccountValidator>();
             services.AddScoped<IOwnerValidator, OwnerValidator>();
+            services.AddScoped<IEntryValidator, EntryValidator>();
             return services;
         }
 

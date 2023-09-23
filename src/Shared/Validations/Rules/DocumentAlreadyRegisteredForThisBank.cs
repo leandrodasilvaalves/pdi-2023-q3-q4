@@ -1,4 +1,4 @@
-using Shared.Contracts;
+using Shared.Contracts.Errors;
 using Shared.Contracts.Repositories;
 using Shared.Contracts.Validations;
 using Shared.Entities;

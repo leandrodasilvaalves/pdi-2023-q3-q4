@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Shared.Contracts;
 using Shared.Contracts.Repositories;
 using Shared.Entities;
 using Shared.Requests;

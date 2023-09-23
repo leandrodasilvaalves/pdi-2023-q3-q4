@@ -11,10 +11,10 @@ namespace Shared.Validations
     {
         protected override void RegisterRules()
         {
-            AddRule(new OwnerNameRule());
-            AddRule(new OwnerPhoneRule());
-            AddRule(new OwnerEmailRule());
-            AddRule(new OwnerDocumentRule());
+            AddRule(new PersonNameRule());
+            AddRule(new PhoneRule());
+            AddRule(new EmailRule());
+            AddRule(new DocumentRule());
         }
     }
 }

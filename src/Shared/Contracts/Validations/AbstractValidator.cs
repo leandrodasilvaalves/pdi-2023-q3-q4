@@ -1,22 +1,22 @@
 using System.Collections.ObjectModel;
-using Shared.Extensions;
+using Shared.Contracts.Errors;
 
 namespace Shared.Contracts.Validations
 {
     public abstract class AbstractValidator<T> : IAbstractValidator<T> where T : class
     {
         private readonly List<IRule> _rules;
-        private readonly List<Error> _errors;
+        private readonly List<IError> _errors;
 
         public AbstractValidator()
         {
             _rules = new();
             _errors = new();
-            Errors = new ReadOnlyCollection<Error>(_errors);
+            Errors = new ReadOnlyCollection<IError>(_errors);
             RegisterRules();
         }
 
-        public IReadOnlyCollection<Error> Errors { get; }
+        public IReadOnlyCollection<IError> Errors { get; }
         public bool IsValid => !IsFailure;
         public bool IsFailure => _errors?.Any() ?? false;
 
@@ -34,14 +34,14 @@ namespace Shared.Contracts.Validations
             return this;
         }
 
-        protected void AddError(Error error)
+        protected void AddError(IError error)
         {
             if (error is not null)
             {
                 _errors.Add(error);
             }
         }
-        protected void AddErrors(IEnumerable<Error> erros)
+        protected void AddErrors(IEnumerable<IError> erros)
         {
             if (erros.Any())
             {

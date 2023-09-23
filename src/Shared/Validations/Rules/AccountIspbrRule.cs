@@ -1,19 +1,23 @@
 using System.Text.RegularExpressions;
-using Shared.Contracts;
+using Shared.Contracts.Errors;
 using Shared.Contracts.Validations;
 using Shared.Entities;
 
 namespace Shared.Validations.Rules
 {
-    public class AccountIspbrRule : Rule<Account>
+    public class AccountIspbrRule : Rule<string>, IRule<Account>, IRule<Entry>
     {
-        public override Task Apply(Account account)
+        public override Task Apply(string ispb)
         {
-            if (!Regex.IsMatch(account.Ispb, @"^[0-9]{8}$", RegexOptions.Compiled))
+            if (!Regex.IsMatch(ispb, @"^[0-9]{8}$", RegexOptions.Compiled))
             {                
                 Error = KnownErrors.INVALID_ISPB;
             }
             return Task.CompletedTask;
         }
+
+        public Task Apply(Account instance) => Apply(instance.Ispb);
+
+        public Task Apply(Entry instance) => Apply(instance.Account.Ispb);
     }
 }
