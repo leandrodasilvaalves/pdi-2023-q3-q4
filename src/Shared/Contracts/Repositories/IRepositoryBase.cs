@@ -1,4 +1,4 @@
-namespace Shared.Contracts
+namespace Shared.Contracts.Repositories
 {
     public interface IRepositoryBase<T> where T : class
     {

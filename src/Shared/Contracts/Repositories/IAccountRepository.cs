@@ -1,6 +1,6 @@
-using Shared.Models;
+using Shared.Entities;
 
-namespace Shared.Contracts
+namespace Shared.Contracts.Repositories
 {
     public interface IAccountRepository : IRepositoryBase<Account>
     {

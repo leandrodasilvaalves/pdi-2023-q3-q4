@@ -1,24 +1,22 @@
 using Shared.Enum;
-using Shared.Models;
+using Shared.Entities;
 
 namespace Shared.Requests
 {
-    public class CreateAccountRequest
+    public class CreateAccountRequest : Shared.Contracts.Models.Account
     {
-        public string Branch { get; set; }
-        public string Number { get; set; }
-        public double Balance { get; set; }
-        public string Ispb { get; set; }
         public Owner Owner { get; set; }
+
+        public double Balance { get; set; }
 
         public Account ToAccount() => new()
         {
-            Branch= Branch,
-            Number= Number,
-            Balance= Balance,
-            Ispb= Ispb,
-            Owner= Owner,
-            CreatedAt= DateTime.UtcNow,
+            Branch = Branch,
+            Number = Number,
+            Balance = Balance,
+            Ispb = Ispb,
+            Owner = Owner,
+            CreatedAt = DateTime.UtcNow,
             Status = AccountStatus.ACTIVE,
         };
     }

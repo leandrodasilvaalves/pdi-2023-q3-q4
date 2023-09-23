@@ -29,7 +29,6 @@ namespace Shared.Contracts.Validations
             {
                 var castedRule = ((IRule<T>)rule);
                 await castedRule.Apply(model);
-                castedRule.Error.LogJson("parallel");
                 AddError(castedRule.Error);
             });
             return this;

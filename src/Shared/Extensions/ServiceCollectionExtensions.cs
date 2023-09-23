@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Contracts;
 using Shared.Contracts.Options;
+using Shared.Contracts.Repositories;
 using Shared.Repositories;
 using Shared.Validations;
 using Shared.Validations.Rules;
@@ -19,6 +19,7 @@ namespace Shared.Extensions
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddSingleton<IAccountRepository, AccountRepository>();
+            services.AddSingleton<IEntryRepository, EntryRepository>();
             return services;
         }
 

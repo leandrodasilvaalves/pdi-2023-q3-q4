@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 using Shared.Contracts;
 using Shared.Contracts.Validations;
-using Shared.Models;
+using Shared.Entities;
 
 namespace Shared.Validations.Rules
 {

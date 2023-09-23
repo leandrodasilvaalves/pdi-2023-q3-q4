@@ -1,0 +1,15 @@
+using Microsoft.Extensions.Options;
+using Shared.Contracts.Options;
+using Shared.Contracts.Repositories;
+using Shared.Entities;
+
+namespace Shared.Repositories
+{
+    public class EntryRepository : RepositoryBase<Entry>, IEntryRepository
+    {
+        public EntryRepository(IOptionsMonitor<MongoOptions> options) : base(options)
+        {}
+
+        protected override string CollectionName => "entries";
+    }
+}

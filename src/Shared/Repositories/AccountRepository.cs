@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using Shared.Contracts;
 using Shared.Contracts.Options;
-using Shared.Models;
+using Shared.Contracts.Repositories;
+using Shared.Entities;
 
 namespace Shared.Repositories
 {

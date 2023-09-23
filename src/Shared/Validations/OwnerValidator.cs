@@ -1,5 +1,5 @@
 using Shared.Contracts.Validations;
-using Shared.Models;
+using Shared.Entities;
 using Shared.Validations.Rules;
 
 namespace Shared.Validations

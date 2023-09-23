@@ -1,6 +1,6 @@
 using Shared.Enum;
 
-namespace Shared.Models
+namespace Shared.Entities
 {
     public class Account : BaseModel
     {

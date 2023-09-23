@@ -1,6 +1,7 @@
 using Shared.Contracts;
+using Shared.Contracts.Repositories;
 using Shared.Contracts.Validations;
-using Shared.Models;
+using Shared.Entities;
 
 namespace Shared.Validations.Rules
 {

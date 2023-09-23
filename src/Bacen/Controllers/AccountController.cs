@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Shared.Contracts;
-using Shared.Models;
+using Shared.Contracts.Repositories;
+using Shared.Entities;
 using Shared.Requests;
 using Shared.Validations;
 
