@@ -35,6 +35,8 @@ namespace Shared.Extensions
         private static IServiceCollection AddAsyncRules(this IServiceCollection services)
         {
             services.AddScoped<IDocumentAlreadyRegisteredForThisBank, DocumentAlreadyRegisteredForThisBank>();
+            services.AddScoped<IAccountMustBeExistsWithValidStatus, AccountMustBeExistsWithValidStatus>();
+            services.AddScoped<IAddressingKeyMustBeUniqueRule, AddressingKeyMustBeUniqueRule>();
             return services;
         }
     }
