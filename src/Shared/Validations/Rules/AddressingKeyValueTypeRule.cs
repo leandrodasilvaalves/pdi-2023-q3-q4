@@ -28,7 +28,7 @@ namespace Shared.Validations.Rules
             }
         }
 
-        private class AddressingKeyEvpRule : Rule<string>, IRule<AddressingKey>
+        private class AddressingKeyEvpRule : Rule<string>, IRule<AddressingKey>, IRule<Entry>
         {
             public override Task Apply(string instance)
             {
@@ -39,8 +39,7 @@ namespace Shared.Validations.Rules
                 return Task.CompletedTask;
             }
             public Task Apply(AddressingKey instance) => Apply(instance.Value);
-
+            public Task Apply(Entry instance) => Apply(instance.AddressingKey.Value);
         }
     }
-
 }
