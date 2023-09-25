@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Shared.Broker;
 using Shared.Contracts.Repositories;
 using Shared.Entities;
 using Shared.Requests;
@@ -12,11 +13,15 @@ namespace Bacen.Controllers
     {
         private readonly IEntryRepository _repository;
         private readonly IEntryValidator _validator;
+        private readonly IPublisher<CreateEntryRequest> _publisher;
 
-        public EntriesController(IEntryRepository repository, IEntryValidator validator)
+        public EntriesController(IEntryRepository repository,
+                                 IEntryValidator validator,
+                                 IPublisher<CreateEntryRequest> publisher)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _validator = validator ?? throw new ArgumentNullException(nameof(validator));
+            _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
         }
 
         [HttpPost]
@@ -28,6 +33,7 @@ namespace Bacen.Controllers
             }
             
             await _repository.InsertAsync(request);
+            await _publisher.PublishAsync("bacen.entries", request);
             return Ok();
         }
     }

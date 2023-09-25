@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
-using Shared.Contracts.Options;
+using Shared.Broker.Consumers;
 using Shared.Extensions;
+using Shared.Requests;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +17,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.ConfigureOptions(builder.Configuration);
 builder.Services.AddRepositories();
 builder.Services.AddValidators();
-
-builder.Services.Configure<MongoOptions>(builder.Configuration.GetSection(""));
+builder.Services.ConfigureKafka(builder.Configuration, "Kafka")
+    .AddPublishers<CreateEntryRequest>()
+    .AddConsumer<EntriesConsumer, CreateEntryRequest>();
 
 var app = builder.Build();
 
