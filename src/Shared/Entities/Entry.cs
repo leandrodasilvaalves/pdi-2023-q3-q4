@@ -3,7 +3,7 @@ using Models = Shared.Contracts.Models;
 
 namespace Shared.Entities
 {
-    public class Entry : BaseModel
+    public class Entry : EntityBase
     {
         public Entry()
         {

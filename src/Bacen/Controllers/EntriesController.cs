@@ -13,11 +13,11 @@ namespace Bacen.Controllers
     {
         private readonly IEntryRepository _repository;
         private readonly IEntryValidator _validator;
-        private readonly IPublisher<CreateEntryRequest> _publisher;
+        private readonly IPublisher<Entry> _publisher;
 
         public EntriesController(IEntryRepository repository,
                                  IEntryValidator validator,
-                                 IPublisher<CreateEntryRequest> publisher)
+                                 IPublisher<Entry> publisher)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _validator = validator ?? throw new ArgumentNullException(nameof(validator));
@@ -27,14 +27,15 @@ namespace Bacen.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] CreateEntryRequest request)
         {
-            if((await _validator.Validate(request)).IsFailure)
+            var entry = request.ToEntity();
+            if((await _validator.Validate(entry)).IsFailure)
             {
                 return BadRequest(new Response<Entry>(_validator.Errors));
             }
             
-            await _repository.InsertAsync(request);
-            await _publisher.PublishAsync("bacen.entries", request);
-            return Ok();
+            await _repository.InsertAsync(entry);
+            await _publisher.PublishAsync("bacen.entries", entry);
+            return Ok(new Response<Entry>(entry));
         }
     }
 }

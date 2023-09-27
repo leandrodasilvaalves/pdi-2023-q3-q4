@@ -9,7 +9,7 @@ namespace Shared.Requests
 
         public double Balance { get; set; }
 
-        public Account ToAccount() => new()
+        public Account ToEntity() => new()
         {
             Branch = Branch,
             Number = Number,

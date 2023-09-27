@@ -5,10 +5,11 @@ using MongoDB.Driver;
 using Shared.Contracts;
 using Shared.Contracts.Options;
 using Shared.Contracts.Repositories;
+using Shared.Entities;
 
 namespace Shared.Repositories
 {
-    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
+    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : EntityBase
     {
         public RepositoryBase(IOptionsMonitor<MongoOptions> options)
         {
@@ -22,6 +23,9 @@ namespace Shared.Repositories
 
         public Task InsertAsync(T model)
             => Collection.InsertOneAsync(model);
+
+        public Task UpdateAsync(T model)
+            => Collection.ReplaceOneAsync(x => x.Id == model.Id, model);
 
         private static void LoadCustomConfiguration()
         {

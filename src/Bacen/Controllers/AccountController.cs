@@ -22,7 +22,7 @@ namespace Bacen.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateAccountRequest request)
         {
-            var account = request.ToAccount();
+            var account = request.ToEntity();
             if ((await _validator.Validate(account)).IsFailure)
             {
                 return BadRequest(new Response<Account>(_validator.Errors));

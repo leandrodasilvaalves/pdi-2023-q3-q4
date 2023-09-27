@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Shared.Broker.Consumers;
+using Shared.Entities;
 using Shared.Extensions;
-using Shared.Requests;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +18,8 @@ builder.Services.ConfigureOptions(builder.Configuration);
 builder.Services.AddRepositories();
 builder.Services.AddValidators();
 builder.Services.ConfigureKafka(builder.Configuration, "Kafka")
-    .AddPublishers<CreateEntryRequest>()
-    .AddConsumer<EntriesConsumer, CreateEntryRequest>();
+    .AddPublishers<Entry>()
+    .AddConsumer<EntriesConsumer, Entry>();
 
 var app = builder.Build();
 

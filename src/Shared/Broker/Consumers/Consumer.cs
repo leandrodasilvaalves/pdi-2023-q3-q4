@@ -37,7 +37,6 @@ namespace Shared.Broker.Consumers
                         if (result is null)
                             continue;
 
-
                         await ConsumeAsync(result.Message.Value, stoppingToken);
                         _consumer.Commit();
                     }

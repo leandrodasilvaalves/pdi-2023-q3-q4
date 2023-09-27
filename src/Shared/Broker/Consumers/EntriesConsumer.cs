@@ -1,17 +1,25 @@
-using Shared.Extensions;
-using Shared.Requests;
+using Shared.Contracts.Repositories;
+using Shared.Entities;
 
 namespace Shared.Broker.Consumers
 {
-    public class EntriesConsumer : Consumer<CreateEntryRequest>
+    public class EntriesConsumer : Consumer<Entry>
     {
-        public EntriesConsumer(IServiceProvider provider)
-            : base(provider, "bacen.entries") { }
-
-        public override Task ConsumeAsync(CreateEntryRequest message, CancellationToken stoppingToken)
+        private readonly IAccountRepository _repository;
+        public EntriesConsumer(IServiceProvider provider, IAccountRepository repository)
+            : base(provider, "bacen.entries")
         {
-            message.LogJson();
-            return Task.CompletedTask;
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        }
+
+        public override async Task ConsumeAsync(Entry message, CancellationToken stoppingToken)
+        {
+            var account = await _repository.GetByAsync(message.Account.Branch, message.Account.Number, message.Account.Ispb);
+            if (account is not null)
+            {
+                account.Add(message.AddressingKey);
+                await _repository.UpdateAsync(account);
+            }
         }
     }
 }
