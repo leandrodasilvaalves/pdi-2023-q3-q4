@@ -15,5 +15,7 @@ namespace Shared.Contracts.Errors
         //entries
         public static Error INVALID_ADDRESSING_KEY = new Error("INVALID_ADDRESSING_KEY", "Addressing Key value or type is invalid");
         public static Error ADDRESSING_KEY_ALREADY_EXISTS = new Error("ADDRESSING_KEY_ALREADY_EXISTS", "The addressing key already exists. Consider open a potability");
+        public static Error DOES_NOT_HAVE_ADDRESSING_KEYS = new Error("DOES_NOT_HAVE_ADDRESSING_KEYS", "The account does not have registered addressing keys");
+
     }
 }

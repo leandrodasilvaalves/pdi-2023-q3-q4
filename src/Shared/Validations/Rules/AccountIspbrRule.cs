@@ -2,10 +2,11 @@ using System.Text.RegularExpressions;
 using Shared.Contracts.Errors;
 using Shared.Contracts.Validations;
 using Shared.Entities;
+using Shared.Requests;
 
 namespace Shared.Validations.Rules
 {
-    public class AccountIspbrRule : Rule<string>, IRule<Account>, IRule<Entry>
+    public class AccountIspbrRule : Rule<string>, IRule<Account>, IRule<Entry>, IRule<GetAccountAddressingKeysRequest>
     {
         public override Task Apply(string ispb)
         {
@@ -19,5 +20,7 @@ namespace Shared.Validations.Rules
         public Task Apply(Account instance) => Apply(instance.Ispb);
 
         public Task Apply(Entry instance) => Apply(instance.Account.Ispb);
+
+        public Task Apply(GetAccountAddressingKeysRequest instance) => Apply(instance.Ispb);
     }
 }

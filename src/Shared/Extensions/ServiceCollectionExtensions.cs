@@ -29,6 +29,7 @@ namespace Shared.Extensions
             services.AddScoped<IAccountValidator, AccountValidator>();
             services.AddScoped<IOwnerValidator, OwnerValidator>();
             services.AddScoped<IEntryValidator, EntryValidator>();
+            services.AddScoped<IGetAccountAddressingKeysValidator, GetAccountAddressingKeysValidator>();
             return services;
         }
 
