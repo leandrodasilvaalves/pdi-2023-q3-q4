@@ -1,4 +1,4 @@
-namespace Shared.Enum
+namespace Shared.Contracts.Enums
 {
     public enum AccountStatus
     {

@@ -3,14 +3,14 @@ using Shared.Contracts.Errors;
 using Shared.Contracts.Models;
 using Shared.Contracts.Validations;
 using Shared.Entities;
+using Shared.Requests;
 
 namespace Shared.Validations.Rules
 {
-    public class AddressingKeyValueTypeRule : Rule<Entry>
+    public class AddressingKeyValueTypeRule : Rule<AddressingKey>, IRule<Entry>, IRule<RegisterClaimRequest>
     {
-        public override async Task Apply(Entry instance)
+        public override async Task Apply(AddressingKey addressingKey)
         {
-            var addressingKey = instance.AddressingKey;
             IRule rule = addressingKey.Type switch
             {
                 AddressingKeyType.CPF => new DocumentRule(),
@@ -20,13 +20,16 @@ namespace Shared.Validations.Rules
                 _ => null
             };
 
-            var castedRule = ((IRule<Entry>)rule);
-            await castedRule.Apply(instance);
+            var castedRule = ((IRule<AddressingKey>)rule);
+            await castedRule.Apply(addressingKey);
             if(castedRule.IsFailure)
             {
                 Error = KnownErrors.INVALID_ADDRESSING_KEY;
             }
         }
+
+        public Task Apply(Entry instance) => Apply(instance.AddressingKey);
+        public Task Apply(RegisterClaimRequest instance) => Apply(instance.AddressingKey);
 
         private class AddressingKeyEvpRule : Rule<string>, IRule<AddressingKey>, IRule<Entry>
         {

@@ -1,5 +1,5 @@
+using Shared.Contracts.Enums;
 using Shared.Contracts.Models;
-using Shared.Enum;
 
 namespace Shared.Entities
 {

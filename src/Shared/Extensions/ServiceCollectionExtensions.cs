@@ -20,6 +20,7 @@ namespace Shared.Extensions
         {
             services.AddSingleton<IAccountRepository, AccountRepository>();
             services.AddSingleton<IEntryRepository, EntryRepository>();
+            services.AddSingleton<IClaimRepository, ClaimRepository>();
             return services;
         }
 
@@ -30,6 +31,7 @@ namespace Shared.Extensions
             services.AddScoped<IOwnerValidator, OwnerValidator>();
             services.AddScoped<IEntryValidator, EntryValidator>();
             services.AddScoped<IGetAccountAddressingKeysValidator, GetAccountAddressingKeysValidator>();
+            services.AddScoped<IRegisterClaimValidator, RegisterClaimValidator>();
             return services;
         }
 
@@ -38,6 +40,7 @@ namespace Shared.Extensions
             services.AddScoped<IDocumentAlreadyRegisteredForThisBank, DocumentAlreadyRegisteredForThisBank>();
             services.AddScoped<IAccountMustBeExistsWithValidStatus, AccountMustBeExistsWithValidStatus>();
             services.AddScoped<IAddressingKeyMustBeUniqueRule, AddressingKeyMustBeUniqueRule>();
+            services.AddScoped<IAddressingKeyMustBeExists, AddressingKeyMustBeExists>();
             return services;
         }
     }

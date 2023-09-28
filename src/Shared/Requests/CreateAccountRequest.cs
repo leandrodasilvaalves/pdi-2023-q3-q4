@@ -1,5 +1,5 @@
-using Shared.Enum;
 using Shared.Entities;
+using Shared.Contracts.Enums;
 
 namespace Shared.Requests
 {

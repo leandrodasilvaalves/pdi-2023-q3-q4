@@ -6,7 +6,7 @@ using Shared.Requests;
 
 namespace Shared.Validations.Rules
 {
-    public class AccountNumberRule : Rule<string>, IRule<Account>, IRule<Entry>, IRule<GetAccountAddressingKeysRequest>
+    public class AccountNumberRule : Rule<string>, IRule<Account>, IRule<Entry>, IRule<GetAccountAddressingKeysRequest>, IRule<RegisterClaimRequest>
     {
         public override Task Apply(string number)
         {
@@ -22,5 +22,7 @@ namespace Shared.Validations.Rules
         public Task Apply(Entry instance) => Apply(instance.Account.Number);
 
         public Task Apply(GetAccountAddressingKeysRequest instance) => Apply(instance.Account);
+
+        public Task Apply(RegisterClaimRequest instance) => Apply(instance.Claimer.Account.Number);
     }
 }

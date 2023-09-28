@@ -3,7 +3,7 @@ namespace Shared.Contracts.Errors
     public class KnownErrors
     {
         public static Error INVALID_OWNER_NAME = new Error("INVALID_OWNER_NAME", "The owner name entered is invalid");
-        public static Error INVALID_OWNER_DOCUMENT = new Error("INVALID_OWNER_DOCUMENT", "The onwer document entered is invalid");
+        public static Error INVALID_DOCUMENT = new Error("INVALID_DOCUMENT", "The document entered is invalid");
         public static Error DOCUMENT_ALREADY_REGISTERED = new Error("DOCUMENT_ALREADY_REGISTERED", "The onwer entered document already has a registered account for this bank");
         public static Error INVALID_PHONE_NUMBER = new Error("INVALID_PHONE_NUMBER", "The phone number entered is invalid");
         public static Error INVALID_EMAIL = new Error("INVALID_EMAIL", "The e-mail entered is invalid");
@@ -16,6 +16,8 @@ namespace Shared.Contracts.Errors
         public static Error INVALID_ADDRESSING_KEY = new Error("INVALID_ADDRESSING_KEY", "Addressing Key value or type is invalid");
         public static Error ADDRESSING_KEY_ALREADY_EXISTS = new Error("ADDRESSING_KEY_ALREADY_EXISTS", "The addressing key already exists. Consider open a potability");
         public static Error DOES_NOT_HAVE_ADDRESSING_KEYS = new Error("DOES_NOT_HAVE_ADDRESSING_KEYS", "The account does not have registered addressing keys");
+        public static Error ADDRESSING_KEY_DOES_NOT_EXISTS = new Error("ADDRESSING_KEY_DOES_NOT_EXISTS", "The addressing key does not exists");
+        public static Error CANNOT_REGISTER_CLAIM_FOR_ADDRESSING_KEY_EVP = new Error("CANNOT_REGISTER_CLAIM_FOR_ADDRESSING_KEY_EVP", "Can not register claim for addressing key EVP");
 
     }
 }

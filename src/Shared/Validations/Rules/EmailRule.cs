@@ -1,11 +1,12 @@
 using System.Text.RegularExpressions;
 using Shared.Contracts.Errors;
+using Shared.Contracts.Models;
 using Shared.Contracts.Validations;
 using Shared.Entities;
 
 namespace Shared.Validations.Rules
 {
-    public class EmailRule : Rule<string>, IRule<Owner>, IRule<Entry>
+    public class EmailRule : Rule<string>, IRule<Owner>, IRule<AddressingKey>
     {
         public override Task Apply(string email)
         {
@@ -18,6 +19,6 @@ namespace Shared.Validations.Rules
 
         public Task Apply(Owner instance) => Apply(instance.Email);
 
-        public Task Apply(Entry instance) => Apply(instance.AddressingKey.Value);
+        public Task Apply(AddressingKey instance) => Apply(instance.Value);
     }
 }
