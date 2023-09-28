@@ -19,7 +19,9 @@ builder.Services.AddRepositories();
 builder.Services.AddValidators();
 builder.Services.ConfigureKafka(builder.Configuration, "Kafka")
     .AddPublishers<Entry>()
-    .AddConsumer<EntriesConsumer, Entry>();
+    .AddPublishers<Claim>()
+    .AddConsumer<EntriesConsumer, Entry>()
+    .AddConsumer<ClaimConsumer, Claim>();
 
 var app = builder.Build();
 

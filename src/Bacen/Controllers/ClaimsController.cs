@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Shared.Broker;
 using Shared.Contracts.Repositories;
 using Shared.Entities;
 using Shared.Requests;
@@ -11,10 +12,12 @@ namespace Bacen.Controllers
     public class ClaimsController : ControllerBase
     {
         private readonly IClaimRepository _repository;
+        private readonly IPublisher<Claim> _publisher;
 
-        public ClaimsController(IClaimRepository repository)
+        public ClaimsController(IClaimRepository repository, IPublisher<Claim> publisher)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
         }
 
         [HttpPost]
@@ -26,6 +29,7 @@ namespace Bacen.Controllers
             }
             var claim = claimRequest.ToEntity();
             await _repository.InsertAsync(claim);
+            await _publisher.PublishAsync("bacen.claims", claim);
             return Ok(new Response<Claim>(claim));
         }
     }
