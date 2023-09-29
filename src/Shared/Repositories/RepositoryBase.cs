@@ -20,6 +20,8 @@ namespace Shared.Repositories
 
         protected IMongoCollection<T> Collection { get; }
 
+        public Task<T> GetByAsync(string id) => Collection.Find(x => x.Id == id).FirstOrDefaultAsync();
+
         public Task InsertAsync(T model)
             => Collection.InsertOneAsync(model);
 

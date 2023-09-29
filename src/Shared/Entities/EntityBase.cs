@@ -5,7 +5,9 @@ namespace Shared.Entities
 {
     public class EntityBase
     {
+        protected EntityBase() => Id = ObjectId.GenerateNewId().ToString();
+        
         [BsonId]
-        public ObjectId Id { get; set; }
+        public string Id { get; set; }
     }
 }

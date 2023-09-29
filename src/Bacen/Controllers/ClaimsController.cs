@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Shared.Broker;
+using Shared.Contracts.Enums;
+using Shared.Contracts.Errors;
 using Shared.Contracts.Repositories;
 using Shared.Entities;
 using Shared.Requests;
@@ -29,8 +31,23 @@ namespace Bacen.Controllers
             }
             var claim = claimRequest.ToEntity();
             await _repository.InsertAsync(claim);
-            await _publisher.PublishAsync("bacen.claims", claim);
+            await _publisher.PublishAsync(KnownTopics.CLAIMS, claim);
             return Ok(new Response<Claim>(claim));
         }
+
+        [HttpPatch("{id}/confirm")]
+        public async Task<IActionResult> ConfirmAsync([FromRoute] string id)
+        {
+            var claim = await _repository.GetByAsync(id);
+            if(claim is null)
+            {
+                return NotFound(new Response<Claim>(KnownErrors.CLAIM_DOES_NOT_EXISTS));
+            }
+            claim.Status = ClaimStatus.CONFIRMED;
+            await _repository.UpdateAsync(claim);
+            await _publisher.PublishAsync(KnownTopics.CLAIMS, claim);
+            return Ok(new Response<Claim>(claim));
+        }
+
     }
 }

@@ -12,6 +12,7 @@ namespace Shared.Entities
             AddressingKey = new();
             Status = EntryStatus.OWNED;
         }
+        
         public Models.Account Account { get; set; }
         public AddressingKey AddressingKey { get; set; }
         public EntryStatus Status { get; set; }

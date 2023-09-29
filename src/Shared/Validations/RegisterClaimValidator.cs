@@ -9,9 +9,13 @@ namespace Shared.Validations
     public class RegisterClaimValidator : AbstractValidator<RegisterClaimRequest>, IRegisterClaimValidator
     {
         private readonly IAddressingKeyMustBeExists _addressingKeyMustBeExists;
+        private readonly IAddressingKeyAlreadyHasAnOpenClaim _anAddressingKeyMustHaveOnlyOneOpenClaim;
 
-        public RegisterClaimValidator(IAddressingKeyMustBeExists addressingKeyMustBeExists) {
+        public RegisterClaimValidator(IAddressingKeyMustBeExists addressingKeyMustBeExists,
+                                      IAddressingKeyAlreadyHasAnOpenClaim anAddressingKeyMustHaveOnlyOneOpenClaim)
+        {
             _addressingKeyMustBeExists = addressingKeyMustBeExists ?? throw new ArgumentNullException(nameof(addressingKeyMustBeExists));
+            _anAddressingKeyMustHaveOnlyOneOpenClaim = anAddressingKeyMustHaveOnlyOneOpenClaim ?? throw new ArgumentNullException(nameof(anAddressingKeyMustHaveOnlyOneOpenClaim));
             RegisterAsyncRules();
         }
 
@@ -28,6 +32,7 @@ namespace Shared.Validations
         private void RegisterAsyncRules()
         {
             AddRule(_addressingKeyMustBeExists);
+            AddRule(_anAddressingKeyMustHaveOnlyOneOpenClaim);
         }
     }
 }

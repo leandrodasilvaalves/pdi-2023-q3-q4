@@ -18,6 +18,9 @@ namespace Shared.Contracts.Errors
         public static Error DOES_NOT_HAVE_ADDRESSING_KEYS = new Error("DOES_NOT_HAVE_ADDRESSING_KEYS", "The account does not have registered addressing keys");
         public static Error ADDRESSING_KEY_DOES_NOT_EXISTS = new Error("ADDRESSING_KEY_DOES_NOT_EXISTS", "The addressing key does not exists");
         public static Error CANNOT_REGISTER_CLAIM_FOR_ADDRESSING_KEY_EVP = new Error("CANNOT_REGISTER_CLAIM_FOR_ADDRESSING_KEY_EVP", "Can not register claim for addressing key EVP");
+        public static Error ADDRESSING_KEY_ALREADY_HAS_AN_OPEN_CLAIM = new Error("ADDRESSING_KEY_ALREADY_HAS_AN_OPEN_CLAIM", "This addressingk ey already has an open claim");
+        public static Error CLAIM_DOES_NOT_EXISTS = new Error("CLAIM_DOES_NOT_EXISTS", "The requested claim does not exist");
+
 
     }
 }

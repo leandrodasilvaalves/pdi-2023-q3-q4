@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Shared.Broker.Consumers;
+using Shared.Contracts.Models;
 using Shared.Entities;
 using Shared.Extensions;
 
@@ -20,7 +21,8 @@ builder.Services.AddValidators();
 builder.Services.ConfigureKafka(builder.Configuration, "Kafka")
     .AddPublishers<Entry>()
     .AddPublishers<Claim>()
-    .AddConsumer<EntriesConsumer, Entry>()
+    .AddPublishers<AddressingKeyForAccountModel>()
+    .AddConsumer<AddressingKeyForAccountConsumer, AddressingKeyForAccountModel>()
     .AddConsumer<ClaimConsumer, Claim>();
 
 var app = builder.Build();

@@ -23,5 +23,10 @@ namespace Shared.Entities
             }
             AddressingKeys.Add(addressingKey);
         }
+
+        public void Remove(AddressingKey addressingKey)
+        {
+            AddressingKeys?.RemoveAll(x => x.Value == addressingKey.Value);
+        }
     }
 }

@@ -41,6 +41,7 @@ namespace Shared.Extensions
             services.AddScoped<IAccountMustBeExistsWithValidStatus, AccountMustBeExistsWithValidStatus>();
             services.AddScoped<IAddressingKeyMustBeUniqueRule, AddressingKeyMustBeUniqueRule>();
             services.AddScoped<IAddressingKeyMustBeExists, AddressingKeyMustBeExists>();
+            services.AddScoped<IAddressingKeyAlreadyHasAnOpenClaim, AddressingKeyAlreadyHasAnOpenClaim>();
             return services;
         }
     }
