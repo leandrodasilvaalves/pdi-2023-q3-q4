@@ -1,6 +1,32 @@
-version: "3.4"
+version: '3.4'
+
+networks:
+  pdi.bacen:
+    driver: bridge
+  pdi.vulture:
+    driver: bridge
+  pdi.star:
+    driver: bridge
+  pdi.infra:
+    driver: bridge
 
 services:
+  bacen:
+    image: ${PROJECT_NAMESPACE}.bc
+    container_name: ${PROJECT_NAME}.bacen
+    build:
+      context: ./src
+      dockerfile: Bacen/Dockerfile
+    depends_on:
+      - mongo
+      - kafka
+    ports:
+      - 5293:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNET_ENV}
+    networks:
+      - pdi.bacen
+
   mongo:
     image: mongo
     container_name: ${PROJECT_NAME}.mongo
@@ -9,6 +35,11 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     ports:
       - 27017:27017
+    networks:
+      - pdi.bacen
+      - pdi.vulture
+      - pdi.star
+      - pdi.infra
 
   mongo-express:
     image: mongo-express
@@ -17,7 +48,8 @@ services:
       - 8081:8081
     environment:
       - ME_CONFIG_MONGODB_URL=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo:27017
-
+    networks:
+      - pdi.infra
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
@@ -25,6 +57,8 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - pdi.infra
 
   kafka:
     image: confluentinc/cp-kafka:latest
@@ -41,6 +75,11 @@ services:
         KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
         KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
         KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - pdi.bacen
+      - pdi.vulture
+      - pdi.star
+      - pdi.infra
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
@@ -53,6 +92,8 @@ services:
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:29092
     ports:
         - 8082:8080
+    networks:
+      - pdi.infra
 
   init-kafka:
     image: confluentinc/cp-zookeeper:latest
@@ -60,6 +101,8 @@ services:
     depends_on:
       - kafka
     entrypoint: [ '/bin/sh', '-c' ]
+    networks:
+      - pdi.infra
     command: |
       "
       # blocks until kafka is reachable
