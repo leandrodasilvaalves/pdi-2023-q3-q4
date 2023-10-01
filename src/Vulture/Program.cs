@@ -4,6 +4,7 @@ using Shared.Contracts.Models;
 using Shared.Entities;
 using Shared.Extensions;
 using Vulture.Extensions;
+using Vulture.Workers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,8 @@ builder.Services.ConfigureKafka(builder.Configuration, "Kafka")
     .AddPublishers<AddressingKeyForAccountModel>()
     .AddConsumer<AddressingKeyForAccountConsumer, AddressingKeyForAccountModel>()
     .AddConsumer<ClaimConsumer, Claim>();
+
+builder.Services.AddHostedService<ClaimsWorker>();
 
 var app = builder.Build();
 

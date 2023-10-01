@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using Shared.Broker;
 using Shared.Contracts.Enums;
 using Shared.Contracts.Errors;
+using Shared.Contracts.Models;
 using Shared.Contracts.Repositories;
 using Shared.Entities;
 using Shared.Requests;
@@ -14,13 +15,18 @@ namespace Bacen.Controllers
     [Route("api/pix/claims")]
     public class ClaimsController : ControllerBase
     {
-        private readonly IClaimRepository _repository;
+        private readonly IClaimRepository _claimRepository;
+        private readonly IEntryRepository _entryRepository;
         private readonly IPublisher<Claim> _publisher;
         private readonly KafkaTopcis _options;
 
-        public ClaimsController(IClaimRepository repository, IPublisher<Claim> publisher, IOptions<KafkaTopcis> options)
+        public ClaimsController(IClaimRepository claimRepository,
+                                IEntryRepository entryRepository,
+                                IPublisher<Claim> publisher,
+                                IOptions<KafkaTopcis> options)
         {
-            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _claimRepository = claimRepository ?? throw new ArgumentNullException(nameof(claimRepository));
+            _entryRepository = entryRepository ?? throw new ArgumentNullException(nameof(entryRepository));
             _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
             _options = options.Value ?? throw new ArgumentNullException(nameof(options));
         }
@@ -32,8 +38,13 @@ namespace Bacen.Controllers
             {
                 return BadRequest(new Response<Claim>(validator.Errors));
             }
+
+            var entry = await _entryRepository.GetByAsync(claimRequest.AddressingKey);
+            
             var claim = claimRequest.ToEntity();
-            await _repository.InsertAsync(claim);
+            claim.Donor = (ClaimerModel)entry.Account;
+
+            await _claimRepository.InsertAsync(claim);
             await _publisher.PublishAsync(_options.Claims, claim);
             return Ok(new Response<Claim>(claim));
         }
@@ -41,16 +52,26 @@ namespace Bacen.Controllers
         [HttpPatch("{id}/confirm")]
         public async Task<IActionResult> ConfirmAsync([FromRoute] string id)
         {
-            var claim = await _repository.GetByAsync(id);
+            var claim = await _claimRepository.GetByAsync(id);
             if(claim is null)
             {
                 return NotFound(new Response<Claim>(KnownErrors.CLAIM_DOES_NOT_EXISTS));
             }
             claim.Status = ClaimStatus.CONFIRMED;
-            await _repository.UpdateAsync(claim);
+            await _claimRepository.UpdateAsync(claim);
             await _publisher.PublishAsync(_options.Claims, claim);
             return Ok(new Response<Claim>(claim));
         }
 
+        [HttpGet("{ispb}")]
+        public async Task<IActionResult> GetAsync([FromRoute] string ispb, [FromQuery]DateTime startDate, [FromQuery]DateTime endDate)
+        {
+            var claim = await _claimRepository.GetByAsync(ispb, startDate, endDate);
+            if(claim is null)
+            {
+                return NotFound(new Response<IEnumerable<Claim>>(KnownErrors.CLAIM_DOES_NOT_EXISTS));
+            }
+            return Ok(new Response<IEnumerable<Claim>>(claim));
+        }    
     }
 }

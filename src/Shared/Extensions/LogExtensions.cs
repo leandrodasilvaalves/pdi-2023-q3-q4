@@ -6,12 +6,17 @@ namespace Shared.Extensions
     {
         public static void LogJson(this object self, string label = "")
         {
-            if(string.IsNullOrEmpty(label))
+            if (string.IsNullOrEmpty(label))
             {
                 label = self.GetType().Name;
             }
-            Console.WriteLine("{0}: {1}", label, JsonSerializer.Serialize(self, 
+            Console.WriteLine("{0}: {1}", label, JsonSerializer.Serialize(self,
                 new JsonSerializerOptions() { WriteIndented = true }));
+        }
+
+        public static string ToJson(this object self)
+        {
+            return JsonSerializer.Serialize(self, new JsonSerializerOptions() { WriteIndented = true });
         }
     }
 }

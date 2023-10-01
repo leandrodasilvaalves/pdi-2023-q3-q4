@@ -22,6 +22,12 @@ namespace Shared.Repositories
 
         public Task<T> GetByAsync(string id) => Collection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
+        public async Task<bool> ExistsAsync(string id)
+        {
+            var filter = Builders<T>.Filter.Eq(x => x.Id, id);
+            return (await Collection.CountDocumentsAsync(filter)) > 0;
+        }
+
         public Task InsertAsync(T model)
             => Collection.InsertOneAsync(model);
 

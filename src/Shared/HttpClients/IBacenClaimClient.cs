@@ -9,7 +9,10 @@ namespace Shared.HttpClients
         [Post("/api/pix/claims")]
         Task<IApiResponse<Response<Claim>>> RegisterAsync(RegisterClaimRequest claim);
 
-        [Patch("/{id}/confirm")]
+        [Patch("/api/pix/claims/{id}/confirm")]
         Task<IApiResponse<Response<Claim>>> ConfirmAsync(string id);
+
+        [Get("/api/pix/claims/{ispb}")]
+        Task<IApiResponse<Response<IEnumerable<Claim>>>> GetAsync(string ispb, GetClaimsQueryParams queryParams);
     }
 }

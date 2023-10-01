@@ -24,8 +24,10 @@ namespace Shared.Broker.Consumers
 
         public override async Task ConsumeAsync(Claim message, CancellationToken stoppingToken)
         {
-            var processMessageAsync = message.Status switch
+            var processMessageAsync = message.Status switch 
             {
+                //TODO: remover chave quando estiver doando portabilidade
+                //se necessario criar um consumer especializado
                 ClaimStatus.OPEN => LockAddressingKeyAsync(message),
                 ClaimStatus.CONFIRMED => ChangeOwnerAsync(message),
                 _ => Task.CompletedTask,
