@@ -14,8 +14,9 @@ namespace Shared.Extensions
 
         public static IServiceCollection ConfigureKafka(this IServiceCollection services, IConfiguration configuration, string sectionName)
         {
-            ProducerConfig = configuration.GetSection(sectionName).Get<ProducerConfig>();
-            ConsumerConfig = configuration.GetSection(sectionName).Get<ConsumerConfig>();
+            ProducerConfig = configuration.GetSection($"{sectionName}:Configuration").Get<ProducerConfig>();
+            ConsumerConfig = configuration.GetSection($"{sectionName}:Configuration").Get<ConsumerConfig>();
+            services.Configure<KafkaTopcis>(configuration.GetSection($"{sectionName}:Topics"));
             return services;
         }
 

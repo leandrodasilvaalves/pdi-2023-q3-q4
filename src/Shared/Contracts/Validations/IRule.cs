@@ -6,7 +6,7 @@ namespace Shared.Contracts.Validations
     {
         bool IsValid { get; }
         bool IsFailure { get; }
-        IError Error { get; }
+        Error Error { get; }
     }
 
 

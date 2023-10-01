@@ -6,7 +6,7 @@ namespace Shared.Contracts.Validations
     {
         public bool IsValid => !IsFailure;
         public bool IsFailure => Error != null;
-        public IError Error { get; protected set; }
+        public Error Error { get; protected set; }
         public abstract Task Apply(TObject instance);
     }
 }

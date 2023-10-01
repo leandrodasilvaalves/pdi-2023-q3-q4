@@ -1,6 +1,6 @@
 namespace Shared.Contracts.Errors
 {
-    public class Error : IError
+    public class Error
     {
         public Error(string code, string message)
         {

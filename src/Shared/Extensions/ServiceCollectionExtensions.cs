@@ -1,7 +1,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Refit;
 using Shared.Contracts.Options;
 using Shared.Contracts.Repositories;
+using Shared.HttpClients;
 using Shared.Repositories;
 using Shared.Validations;
 using Shared.Validations.Rules;
@@ -35,13 +37,22 @@ namespace Shared.Extensions
             return services;
         }
 
-        private static IServiceCollection AddAsyncRules(this IServiceCollection services)
+        public static IServiceCollection AddAsyncRules(this IServiceCollection services)
         {
             services.AddScoped<IDocumentAlreadyRegisteredForThisBank, DocumentAlreadyRegisteredForThisBank>();
             services.AddScoped<IAccountMustBeExistsWithValidStatus, AccountMustBeExistsWithValidStatus>();
             services.AddScoped<IAddressingKeyMustBeUniqueRule, AddressingKeyMustBeUniqueRule>();
             services.AddScoped<IAddressingKeyMustBeExists, AddressingKeyMustBeExists>();
             services.AddScoped<IAddressingKeyAlreadyHasAnOpenClaim, AddressingKeyAlreadyHasAnOpenClaim>();
+            return services;
+        }
+
+        public static IServiceCollection AddBacenHttpClients(this IServiceCollection services, IConfiguration configuration)
+        {
+            var bacenUrlBase = configuration.GetSection("Bacen:Url").Get<string>();
+            services.AddRefitClient<IBacenAccountClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(bacenUrlBase));
+            services.AddRefitClient<IBacenEntryClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(bacenUrlBase));
+            services.AddRefitClient<IBacenClaimClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(bacenUrlBase));
             return services;
         }
     }

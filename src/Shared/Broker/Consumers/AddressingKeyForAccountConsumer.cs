@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using Shared.Contracts.Models;
 using Shared.Contracts.Repositories;
 
@@ -6,8 +7,8 @@ namespace Shared.Broker.Consumers
     public class AddressingKeyForAccountConsumer : Consumer<AddressingKeyForAccountModel>
     {
         private readonly IAccountRepository _repository;
-        public AddressingKeyForAccountConsumer(IServiceProvider provider, IAccountRepository repository)
-            : base(provider, KnownTopics.ENTRIES)
+        public AddressingKeyForAccountConsumer(IServiceProvider provider, IAccountRepository repository, IOptions<KafkaTopcis> options)
+            : base(provider, options.Value?.Entries)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
