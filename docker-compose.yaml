@@ -44,6 +44,23 @@ services:
       - pdi.vulture
       - pdi.bacen
 
+  star-accounts:
+    image: ${PROJECT_NAMESPACE}.star.accounts
+    container_name: ${PROJECT_NAME}.star.accounts
+    build:
+      context: ./src/
+      dockerfile: Star/Star.Accounts/Dockerfile
+    depends_on:
+      - mongo
+      - kafka
+    ports:
+      - 6404:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNET_ENV}
+    networks:
+      - pdi.star
+      - pdi.bacen
+
   mongo:
     image: mongo
     container_name: ${PROJECT_NAME}.mongo

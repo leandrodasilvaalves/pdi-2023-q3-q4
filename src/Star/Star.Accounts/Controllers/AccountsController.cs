@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Shared.Contracts.Errors;
+using AddressingKey = Shared.Contracts.Models.AddressingKey;
 using Shared.Contracts.Repositories;
 using Shared.Entities;
 using Shared.Requests;
 using Shared.Validations;
 using Shared.HttpClients;
-using Vulture.Extensions;
 using Shared.Extensions;
-using Vulture.Contracts;
-using AddressingKey = Shared.Contracts.Models.AddressingKey;
+using Star.Accounts.Contracts;
+using Star.Accounts.Extensions;
 
-namespace Vulture.Controllers
+namespace Star.Accounts.Controllers
 {
     [ApiController]
     [Route("api/account")]
@@ -28,7 +28,7 @@ namespace Vulture.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] CreateAccountRequest request, [FromServices] IAccountValidator validator)
         {
-            var account = request.ToVultureEntity();
+            var account = request.ToStarEntity();
             if ((await validator.Validate(account)).IsFailure)
             {
                 return BadRequest(new Response<Account>(validator.Errors));
