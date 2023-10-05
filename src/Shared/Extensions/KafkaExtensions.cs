@@ -35,6 +35,7 @@ namespace Shared.Extensions
             where TMessage : class
             where TConsumer : class, IConsumer<TMessage>, IHostedService
         {
+            ConsumerConfig.EnableAutoCommit = true;
             services.AddSingleton<IConsumer<Null, TMessage>>(new ConsumerBuilder<Null, TMessage>(ConsumerConfig)
                 .SetValueDeserializer(CustomDeserializer<TMessage>.Instance())
                 .Build());

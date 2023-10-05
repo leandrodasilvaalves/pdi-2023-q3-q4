@@ -8,6 +8,7 @@ using Shared.Validations;
 using Shared.HttpClients;
 using Vulture.Extensions;
 using Shared.Extensions;
+using Vulture.Contracts;
 
 namespace Vulture.Controllers
 {
@@ -46,7 +47,7 @@ namespace Vulture.Controllers
         [HttpGet("{branch}/{account}/addressing-keys")]
         public async Task<IActionResult> GetAsync([FromRoute] GetAccountAddressingKeysRequest request, [FromServices] IGetAccountAddressingKeysValidator validator)
         {
-
+            request.Ispb = Constants.ISPB;
             if ((await validator.Validate(request)).IsFailure)
             {
                 return BadRequest(new Response<List<AddressingKey>>(validator.Errors));

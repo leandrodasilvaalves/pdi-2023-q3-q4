@@ -23,7 +23,7 @@ builder.Services.ConfigureKafka(builder.Configuration, "Kafka")
     .AddPublishers<Claim>()
     .AddPublishers<AddressingKeyForAccountModel>()
     .AddConsumer<AddressingKeyForAccountConsumer, AddressingKeyForAccountModel>()
-    .AddConsumer<ClaimConsumer, Claim>();
+    .AddConsumer<Bacen.Consumers.ClaimConsumer, Claim>();
 
 var app = builder.Build();
 

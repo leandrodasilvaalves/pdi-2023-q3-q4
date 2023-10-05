@@ -47,7 +47,7 @@ namespace Vulture.Controllers
                 return BadRequest(await result.ToFailureAsync());
             }
 
-            var claim = claimRequest.ToVultureEntity(result.GetId());            
+            var claim = claimRequest.ToVultureEntity(result.GetId());
             await _repository.InsertAsync(claim);
             await _publisher.PublishAsync(_options.Claims, claim);
             return Ok(new Response<Claim>(claim));
@@ -57,13 +57,13 @@ namespace Vulture.Controllers
         public async Task<IActionResult> ConfirmAsync([FromRoute] string id)
         {
             var claim = await _repository.GetByAsync(id);
-            if (claim is null)
+            if (claim is null)  
             {
                 return NotFound(new Response<Claim>(KnownErrors.CLAIM_DOES_NOT_EXISTS));
             }
 
             var result = await _claimClient.ConfirmAsync(id);
-            if(result.IsFailure())
+            if (result.IsFailure())
             {
                 return BadRequest(await result.ToFailureAsync());
             }
@@ -72,7 +72,6 @@ namespace Vulture.Controllers
             await _repository.UpdateAsync(claim);
             await _publisher.PublishAsync(_options.Claims, claim);
             return Ok(new Response<Claim>(claim));
-        }
-
+        } 
     }
 }

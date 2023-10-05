@@ -38,12 +38,15 @@ namespace Shared.Broker.Consumers
                             continue;
 
                         await ConsumeAsync(result.Message.Value, stoppingToken);
-                        _consumer.Commit();
                     }
                 }
                 catch (OperationCanceledException)
                 {
                     Console.WriteLine($"Encerrando consumer...[{_topicName}]");
+                }
+                catch (KafkaException ex)
+                {
+                    Console.WriteLine("Execption: {0}, \nStackTrace: {1}",ex.Message, ex.StackTrace);
                 }
                 finally
                 {

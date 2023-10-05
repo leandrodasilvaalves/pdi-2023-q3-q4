@@ -66,12 +66,12 @@ namespace Bacen.Controllers
         [HttpGet("{ispb}")]
         public async Task<IActionResult> GetAsync([FromRoute] string ispb, [FromQuery]DateTime startDate, [FromQuery]DateTime endDate)
         {
-            var claim = await _claimRepository.GetByAsync(ispb, startDate, endDate);
-            if(claim is null)
+            var claims = await _claimRepository.GetByAsync(ispb, startDate, endDate);
+            if(claims is null)
             {
                 return NotFound(new Response<IEnumerable<Claim>>(KnownErrors.CLAIM_DOES_NOT_EXISTS));
             }
-            return Ok(new Response<IEnumerable<Claim>>(claim));
+            return Ok(new Response<IEnumerable<Claim>>(claims));
         }    
     }
 }

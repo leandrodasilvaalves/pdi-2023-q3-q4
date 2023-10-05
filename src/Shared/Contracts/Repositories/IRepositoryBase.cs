@@ -8,5 +8,6 @@ namespace Shared.Contracts.Repositories
         Task<T> GetByAsync(string id);
         Task InsertAsync(T model);
         Task UpdateAsync(T model);
+        Task DeleteAsync(string id);
     }
 }

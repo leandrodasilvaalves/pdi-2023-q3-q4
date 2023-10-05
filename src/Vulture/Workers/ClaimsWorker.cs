@@ -36,14 +36,14 @@ namespace Vulture.Workers
             {
                 var now = DateTime.UtcNow;
                 var result = await _bacenClaimClient.GetAsync(Constants.ISPB, new GetClaimsQueryParams(now.AddSeconds(-10), now));
-                _logger.LogInformation("Resquested At: {0} \nResponse:{1}", now.ToString("yyyy-MM-ddTHH:mm:ss.fff"), result.Content.ToJson());
-
+                LogInformation(now, result.Content);
+                
                 if (result.Content.Data.Any())
                 {
                     foreach (var claim in result.Content.Data)
                     {
                         var exsits = await _repository.ExistsAsync(claim.Id);
-                        var processClaimAsync = exsits switch 
+                        var processClaimAsync = exsits switch
                         {
                             false => _repository.InsertAsync(claim),
                             true => _repository.UpdateAsync(claim),
@@ -52,8 +52,17 @@ namespace Vulture.Workers
                         await _publisher.PublishAsync(_options.Claims, claim);
                     }
                 }
-                await Task.Delay(TimeSpan.FromSeconds(5));
+                await Task.Delay(TimeSpan.FromSeconds(10));
             }
+        }
+
+        private Task LogInformation(DateTime dateTime, object result)
+        {
+            return Task.Run(() => 
+                _logger.LogInformation("Resquested At: {0} - {1} \nResponse:{2}",
+                    dateTime.AddSeconds(-10).SetMillisecond().ToString("yyyy-MM-ddTHH:mm:ss.fff"),
+                    dateTime.SetMillisecond(999).ToString("yyyy-MM-ddTHH:mm:ss.fff"),
+                    result.ToJson()));
         }
     }
 }

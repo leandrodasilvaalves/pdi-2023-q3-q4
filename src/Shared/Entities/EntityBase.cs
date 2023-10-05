@@ -9,5 +9,7 @@ namespace Shared.Entities
         
         [BsonId]
         public string Id { get; set; }
+
+        public DateTime UpdatedAt { get; set; }
     }
 }

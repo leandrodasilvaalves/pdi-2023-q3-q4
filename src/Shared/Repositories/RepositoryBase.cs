@@ -29,10 +29,19 @@ namespace Shared.Repositories
         }
 
         public Task InsertAsync(T model)
-            => Collection.InsertOneAsync(model);
+        {
+            model.UpdatedAt = DateTime.UtcNow;
+            return Collection.InsertOneAsync(model);
+        }
 
         public Task UpdateAsync(T model)
-            => Collection.ReplaceOneAsync(x => x.Id == model.Id, model);
+        {
+            model.UpdatedAt = DateTime.UtcNow;
+            return Collection.ReplaceOneAsync(x => x.Id == model.Id, model);
+        }
+
+        public Task DeleteAsync(string id)
+            => Collection.DeleteOneAsync(x => x.Id == id);
 
         private static void LoadCustomConfiguration()
         {

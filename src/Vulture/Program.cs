@@ -3,6 +3,7 @@ using Shared.Broker.Consumers;
 using Shared.Contracts.Models;
 using Shared.Entities;
 using Shared.Extensions;
+using Vulture.Consumers;
 using Vulture.Extensions;
 using Vulture.Workers;
 

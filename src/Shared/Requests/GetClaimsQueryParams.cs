@@ -1,4 +1,5 @@
 using Refit;
+using Shared.Extensions;
 
 namespace Shared.Requests
 {
@@ -8,8 +9,8 @@ namespace Shared.Requests
 
         public GetClaimsQueryParams(DateTime starDate, DateTime endDate)
         {
-            StartDate = starDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
-            EndDate = endDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+            StartDate = starDate.SetMillisecond(0).ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+            EndDate = endDate.SetMillisecond(999).ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
         }
 
         [AliasAs("startDate")]

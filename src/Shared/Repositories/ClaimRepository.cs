@@ -12,13 +12,13 @@ namespace Shared.Repositories
 
         protected override string CollectionName => "claims";
 
-        public async Task<IEnumerable<Claim>> GetByAsync(string ispb, DateTime startDate, DateTime endDate)
+        public Task<List<Claim>> GetByAsync(string ispb, DateTime startDate, DateTime endDate)
         {
-            var filter =
-                Builders<Claim>.Filter.Eq(x => x.Donor.Account.Ispb, ispb) &
-                Builders<Claim>.Filter.Gte(x => x.UpdatedAt, startDate) &
-                Builders<Claim>.Filter.Lte(x => x.UpdatedAt, endDate);
-            return await Collection.Find(filter).ToListAsync();
+            return Task.FromResult(Collection
+                .AsQueryable()
+                .Where(x => (x.Donor.Account.Ispb == ispb || x.Claimer.Account.Ispb == ispb)
+                       && x.UpdatedAt >= startDate && x.UpdatedAt <= endDate)
+                .ToList());
         }
     }
 }

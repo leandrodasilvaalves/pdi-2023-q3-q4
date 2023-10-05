@@ -26,6 +26,23 @@ services:
       - ASPNETCORE_ENVIRONMENT=${ASPNET_ENV}
     networks:
       - pdi.bacen
+  
+  vulture:
+    image: ${PROJECT_NAMESPACE}.vulture
+    container_name: ${PROJECT_NAME}.vulture
+    build:
+      context: ./src
+      dockerfile: Vulture/Dockerfile
+    depends_on:
+      - mongo
+      - kafka
+    ports:
+      - 6302:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNET_ENV}
+    networks:
+      - pdi.vulture
+      - pdi.bacen
 
   mongo:
     image: mongo

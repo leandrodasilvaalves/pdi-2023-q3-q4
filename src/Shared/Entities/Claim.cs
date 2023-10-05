@@ -7,10 +7,6 @@ namespace Shared.Entities
     {
         public Claim()
         {
-            UpdatedAt = DateTime.UtcNow;
-            CreatedAt = DateTime.UtcNow;
-            ResolutionLimitDate = CreatedAt.AddDays(7);
-            ConclusionLimitDate = ResolutionLimitDate.AddDays(7);
             Status = ClaimStatus.OPEN;
         }
 
@@ -19,9 +15,5 @@ namespace Shared.Entities
         public ClaimerModel Donor { get; set; }
         public AddressingKey AddressingKey { get; set; }
         public ClaimStatus Status { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime ResolutionLimitDate { get; set; }
-        public DateTime ConclusionLimitDate { get; set; }
-        public DateTime UpdatedAt { get; set; }
     }
 }
