@@ -1,14 +1,14 @@
 using Shared.Entities;
 using Shared.Requests;
-using Star.Accounts.Contracts;
+using Star.Entries.Contracts;
 
 namespace Star.Accounts.Extensions
 {
     public static class RequestExtensions
     {
-        public static Account ToStarEntity(this CreateAccountRequest self)
+        public static Entry ToStarEntity(this CreateEntryRequest self)
         {
-            self.Ispb = Constants.ISPB;
+            self.Account.Ispb = Constants.ISPB;
             return self.ToEntity();
         }
     }

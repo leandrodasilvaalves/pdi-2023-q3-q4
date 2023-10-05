@@ -60,6 +60,23 @@ services:
     networks:
       - pdi.star
       - pdi.bacen
+  
+  star-entries:
+    image: ${PROJECT_NAMESPACE}.star.entries
+    container_name: ${PROJECT_NAME}.star.entries
+    build:
+      context: ./src/
+      dockerfile: Star/Star.Entries/Dockerfile
+    depends_on:
+      - mongo
+      - kafka
+    ports:
+      - 6405:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNET_ENV}
+    networks:
+      - pdi.star
+      - pdi.bacen
 
   mongo:
     image: mongo
