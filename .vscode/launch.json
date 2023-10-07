@@ -41,5 +41,25 @@
                 "/Views": "${workspaceFolder}/Views"
             }
         },
+        {
+            "name": "Star Accounts (webapi)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-star-account",
+            "program": "${workspaceFolder}/src/Star/Star.Accounts/bin/Debug/net7.0/Star.Accounts.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Star/Star.Accounts",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
     ]
 }

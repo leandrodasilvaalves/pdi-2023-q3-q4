@@ -23,7 +23,6 @@ builder.Services.AddRepositories();
 builder.Services.AddVultureValidators();
 builder.Services.AddBacenHttpClients(builder.Configuration);
 builder.Services.ConfigureKafka(builder.Configuration, "Kafka")
-    .AddPublishers<Entry>()
     .AddPublishers<Claim>()
     .AddPublishers<AddressingKeyForAccountModel>()
     .AddConsumer<AddressingKeyForAccountConsumer, AddressingKeyForAccountModel>()

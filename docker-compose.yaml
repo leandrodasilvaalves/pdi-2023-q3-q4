@@ -18,14 +18,25 @@ services:
       context: ./src
       dockerfile: Bacen/Dockerfile
     depends_on:
-      - mongo
-      - kafka
+      mongo:
+        condition: service_healthy        
+      kafka:
+        condition: service_healthy
     ports:
       - 5293:80
     environment:
       - ASPNETCORE_ENVIRONMENT=${ASPNET_ENV}
+      - Kafka__Configuration__BootstrapServers=${KAFKA_BOOTSTRAP}    
     networks:
       - pdi.bacen
+    cpus: 0.25
+    mem_limit: 256M
+    healthcheck:
+      test: curl --insecure --fail --location 'http://localhost/hc' || exit 1
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
   
   vulture:
     image: ${PROJECT_NAMESPACE}.vulture
@@ -34,15 +45,26 @@ services:
       context: ./src
       dockerfile: Vulture/Dockerfile
     depends_on:
-      - mongo
-      - kafka
+      mongo:
+        condition: service_healthy        
+      kafka:
+        condition: service_healthy
     ports:
       - 6302:80
     environment:
       - ASPNETCORE_ENVIRONMENT=${ASPNET_ENV}
+      - Kafka__Configuration__BootstrapServers=${KAFKA_BOOTSTRAP}
     networks:
       - pdi.vulture
       - pdi.bacen
+    cpus: 0.25
+    mem_limit: 256M
+    healthcheck:
+      test: curl --insecure --fail --location 'http://localhost/hc' || exit 1
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   star-accounts:
     image: ${PROJECT_NAMESPACE}.star.accounts
@@ -51,15 +73,26 @@ services:
       context: ./src/
       dockerfile: Star/Star.Accounts/Dockerfile
     depends_on:
-      - mongo
-      - kafka
+      mongo:
+        condition: service_healthy        
+      kafka:
+        condition: service_healthy
     ports:
       - 6404:80
     environment:
       - ASPNETCORE_ENVIRONMENT=${ASPNET_ENV}
+      - Kafka__Configuration__BootstrapServers=${KAFKA_BOOTSTRAP}
     networks:
       - pdi.star
       - pdi.bacen
+    cpus: 0.25
+    mem_limit: 256M
+    healthcheck:
+      test: curl --insecure --fail --location 'http://localhost/hc' || exit 1
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
   
   star-entries:
     image: ${PROJECT_NAMESPACE}.star.entries
@@ -68,15 +101,26 @@ services:
       context: ./src/
       dockerfile: Star/Star.Entries/Dockerfile
     depends_on:
-      - mongo
-      - kafka
+      mongo:
+        condition: service_healthy        
+      kafka:
+        condition: service_healthy
     ports:
       - 6405:80
     environment:
       - ASPNETCORE_ENVIRONMENT=${ASPNET_ENV}
+      - Kafka__Configuration__BootstrapServers=${KAFKA_BOOTSTRAP}
     networks:
       - pdi.star
       - pdi.bacen
+    cpus: 0.25
+    mem_limit: 256M
+    healthcheck:
+      test: curl --insecure --fail --location 'http://localhost/hc' || exit 1
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   mongo:
     image: mongo
@@ -91,16 +135,30 @@ services:
       - pdi.vulture
       - pdi.star
       - pdi.infra
+    cpus: 0.5
+    mem_limit: 256M
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+      
 
   mongo-express:
     image: mongo-express
     container_name: ${PROJECT_NAME}.mongo-express
+    depends_on:
+      mongo:
+        condition: service_healthy
     ports:
       - 8081:8081
     environment:
       - ME_CONFIG_MONGODB_URL=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo:27017
     networks:
       - pdi.infra
+    cpus: 0.25
+    mem_limit: 256M
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
@@ -110,19 +168,28 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     networks:
       - pdi.infra
+    cpus: 0.5
+    mem_limit: 512M
+    healthcheck:
+      test: nc -z localhost 2181 || exit -1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   kafka:
     image: confluentinc/cp-kafka:latest
     container_name: ${PROJECT_NAME}.Kafka
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
     ports:
         - "2181:2181"
         - "9092:9092"
     environment:
         KAFKA_BROKER_ID: 1
         KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://${KAFKA_BOOTSTRAP},PLAINTEXT_HOST://localhost:9092
         KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
         KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
         KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -131,12 +198,21 @@ services:
       - pdi.vulture
       - pdi.star
       - pdi.infra
+    cpus: 0.5   
+    mem_limit: 512M
+    healthcheck:
+      test: ["CMD-SHELL", "kafka-topics --bootstrap-server localhost:9092 --list"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     container_name: ${PROJECT_NAME}.kafka-ui
     depends_on:
-      - kafka
+      kafka:
+        condition: service_healthy
     environment:
       - KAFKA_CLUSTERS_0_NAME=local
       - KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL=PLAINTEXT
@@ -145,15 +221,20 @@ services:
         - 8082:8080
     networks:
       - pdi.infra
+    cpus: 0.5
+    mem_limit: 256M
 
   init-kafka:
     image: confluentinc/cp-zookeeper:latest
     container_name: ${PROJECT_NAME}.init-kafka
     depends_on:
-      - kafka
+      kafka:
+        condition: service_healthy
     entrypoint: [ '/bin/sh', '-c' ]
     networks:
       - pdi.infra
+    cpus: 0.5
+    mem_limit: 256M
     command: |
       "
       # blocks until kafka is reachable
@@ -172,3 +253,4 @@ services:
       echo -e 'Successfully created the following topics:'
       kafka-topics --bootstrap-server kafka:29092 --list
       "
+    

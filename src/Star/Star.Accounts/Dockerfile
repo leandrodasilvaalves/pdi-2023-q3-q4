@@ -1,5 +1,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 As base
 WORKDIR /app
+RUN apt-get update -y && apt-get install -y curl
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /build

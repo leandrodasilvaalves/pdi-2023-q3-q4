@@ -8,7 +8,7 @@ if [[ $1 == *"-b"* ]]; then
 fi
 
 i=0
-max=12
+max=3
 
 while [ $i -lt $max ]
 do
@@ -18,4 +18,4 @@ do
     sleep $i
 done
 
-docker-compose logs --follow --tail=all star-accounts
+docker-compose logs --follow --tail=all bacen star-entries star-accounts vulture 

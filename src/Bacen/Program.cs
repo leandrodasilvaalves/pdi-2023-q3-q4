@@ -19,7 +19,6 @@ builder.Services.ConfigureOptions(builder.Configuration);
 builder.Services.AddRepositories();
 builder.Services.AddValidators();
 builder.Services.ConfigureKafka(builder.Configuration, "Kafka")
-    .AddPublishers<Entry>()
     .AddPublishers<Claim>()
     .AddPublishers<AddressingKeyForAccountModel>()
     .AddConsumer<AddressingKeyForAccountConsumer, AddressingKeyForAccountModel>()
