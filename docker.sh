@@ -7,15 +7,5 @@ if [[ $1 == *"-b"* ]]; then
     docker image rm -f $(docker image ls --format "{{.ID}} {{.Repository}}:{{.Tag}}" | grep -i '<none>' | awk '{print $1}')
 fi
 
-i=0
-max=3
-
-while [ $i -lt $max ]
-do
-    docker-compose up -d
-    i=$((i + 1))
-    echo "Attempt $i of $max"
-    sleep $i
-done
-
+docker-compose up -d
 docker-compose logs --follow --tail=all bacen star-entries star-accounts star-claims vulture 
