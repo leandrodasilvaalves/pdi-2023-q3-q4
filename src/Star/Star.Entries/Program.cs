@@ -23,7 +23,6 @@ builder.Services.ConfigureKafka(builder.Configuration, "Kafka")
     .AddPublishers<AddressingKeyForAccountModel>()
     .AddConsumer<ClaimConsumer, Claim>();
 
-
 var app = builder.Build();
 
 app.UseSwagger();

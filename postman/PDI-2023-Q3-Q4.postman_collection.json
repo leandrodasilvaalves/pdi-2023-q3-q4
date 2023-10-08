@@ -1,0 +1,2663 @@
+{
+	"info": {
+		"_postman_id": "561dd15a-a5ea-4d01-aecc-e96c5bfce629",
+		"name": "PDI-2023-Q3/Q4",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2180918"
+	},
+	"item": [
+		{
+			"name": "Bacen",
+			"item": [
+				{
+					"name": "Accounts",
+					"item": [
+						{
+							"name": "Create Account",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const checkPropertyExists = (property) => {",
+											"    pm.expect(pm.response.json()).to.have.property(property);",
+											"}",
+											"",
+											"const checkPropertyIsObject = (property) => {",
+											"    pm.expect(pm.response.json()[property]).to.be.an('object');",
+											"}",
+											"",
+											"const checkDataPropertyExists = (property) => {",
+											"    pm.expect(pm.response.json().data).to.have.property(property);",
+											"}",
+											"",
+											"const checkOwnerPropertyExists = (property) => {",
+											"    pm.expect(pm.response.json().data.owner).to.have.property(property);",
+											"}",
+											"",
+											"pm.test(\"Response has isSuccess property\", () => {",
+											"    checkPropertyExists('isSuccess');",
+											"});",
+											"",
+											"pm.test(\"Response has isFailure property\", () => {",
+											"    checkPropertyExists('isFailure');",
+											"});",
+											"",
+											"pm.test(\"Response has data property\", () => {",
+											"    checkPropertyExists('data');",
+											"});",
+											"",
+											"pm.test(\"data property is an object\", () => {",
+											"    checkPropertyIsObject('data');",
+											"});",
+											"",
+											"pm.test(\"data object has branch property\", () => {",
+											"    checkDataPropertyExists('branch');",
+											"});",
+											"",
+											"pm.test(\"data object has number property\", () => {",
+											"    checkDataPropertyExists('number');",
+											"});",
+											"",
+											"pm.test(\"data object has balance property\", () => {",
+											"    checkDataPropertyExists('balance');",
+											"});",
+											"",
+											"pm.test(\"data object has ispb property\", () => {",
+											"    checkDataPropertyExists('ispb');",
+											"});",
+											"",
+											"pm.test(\"data object has owner property\", () => {",
+											"    checkDataPropertyExists('owner');",
+											"});",
+											"",
+											"pm.test(\"owner object has name property\", () => {",
+											"    checkOwnerPropertyExists('name');",
+											"});",
+											"",
+											"pm.test(\"owner object has document property\", () => {",
+											"    checkOwnerPropertyExists('document');",
+											"});",
+											"",
+											"pm.test(\"owner object has phone property\", () => {",
+											"    checkOwnerPropertyExists('phone');",
+											"});",
+											"",
+											"pm.test(\"owner object has email property\", () => {",
+											"    checkOwnerPropertyExists('email');",
+											"});",
+											"",
+											"pm.test(\"data object has createdAt property\", () => {",
+											"    checkDataPropertyExists('createdAt');",
+											"});",
+											"",
+											"pm.test(\"data object has status property\", () => {",
+											"    checkDataPropertyExists('status');",
+											"});",
+											"",
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(\"OK\");",
+											"    pm.expect(pm.response.json().isSuccess).to.be.true;",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"ispb\",\"13140088\")"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"branch\": \"0001\",\n    \"number\": \"{{account_number}}\",\n    \"balance\": 0.0,\n    \"ispb\": \"{{ispb}}\",\n    \"owner\": {\n        \"name\": \"João da Silva\",\n        \"document\": \"{{document}}\",\n        \"phone\": \"+5584988734455\",\n        \"email\": \"benicio47@gmail.com\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{bacen}}/api/account",
+									"host": [
+										"{{bacen}}"
+									],
+									"path": [
+										"api",
+										"account"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "201 - Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"branch\": \"0001\",\n    \"number\": \"123456\",\n    \"balance\": 0.0,\n    \"ispb\": \"13140088\",\n    \"owner\":{\n        \"name\": \"João da Silva\",\n        \"document\": \"56796857011\",\n        \"phone\": \"57955117333\",\n        \"email\": \"benicio47@gmail.com\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{bacen}}/api/account",
+											"host": [
+												"{{bacen}}"
+											],
+											"path": [
+												"api",
+												"account"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {\n        \"branch\": \"0001\",\n        \"number\": \"123456\",\n        \"balance\": 0.0,\n        \"ispb\": \"13140088\",\n        \"owner\": {\n            \"name\": \"João da Silva\",\n            \"document\": \"56796857011\",\n            \"phone\": \"57955117333\",\n            \"email\": \"benicio47@gmail.com\"\n        },\n        \"createdAt\": \"2023-09-14T20:56:10.123Z\",\n        \"status\": \"ACTIVE\"\n    }\n}"
+								},
+								{
+									"name": "400 - Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{bacen}}/api/account",
+											"host": [
+												"{{bacen}}"
+											],
+											"path": [
+												"api",
+												"account"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": false,\n    \"isFailure\": true,\n    \"errors\":[\n        {\n            \"code\": \"INVALID_OWNER_NAME\",\n            \"message\": \"The owner name entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_DOCUMENT\",\n            \"message\": \"The document entered is invalid\"\n        },\n        {\n            \"code\": \"DOCUMENT_ALREADY_REGISTERED\",\n            \"message\": \"The onwer entered document already has a registered account for this bank\"\n        },\n        {\n            \"code\": \"INVALID_PHONE_NUMBER\",\n            \"message\": \"The phone number entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_EMAIL\",\n            \"message\": \"The e-mail entered is invalid\"\n        },        \n        {\n            \"code\": \"INVALID_ACCOUNT_BRANCH\",\n            \"message\": \"The account branch entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ACCOUNT_NUMBER\",\n            \"message\": \"The account number entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ISPB\",\n            \"message\": \"The ispb entered is invalid\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Account Addressing Keys",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"ispb\", \"13140088\")",
+											"pm.environment.set(\"branch\", \"0001\")",
+											"pm.environment.set(\"account_number\", \"123456\")",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{bacen}}/api/account/{{ispb}}/{{branch}}/{{account_number}}/addressing-keys",
+									"host": [
+										"{{bacen}}"
+									],
+									"path": [
+										"api",
+										"account",
+										"{{ispb}}",
+										"{{branch}}",
+										"{{account_number}}",
+										"addressing-keys"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200 - OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-owner-id",
+												"value": "{{owner-document}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{bacen}}/api/account/{{ispb}}/{{branch}}/{{account_number}}/addressing-keys",
+											"host": [
+												"{{bacen}}"
+											],
+											"path": [
+												"api",
+												"account",
+												"{{ispb}}",
+												"{{branch}}",
+												"{{account_number}}",
+												"addressing-keys"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": [\n        {\n            \"type\": \"CPF\",\n            \"value\": \"56796857011\"\n        },\n        {\n            \"type\": \"PHONE\",\n            \"value\": \"+5584991929394\"\n        },\n        {\n            \"type\": \"EMAIL\",\n            \"value\": \"joaosilva@email.com\"\n        },\n        {\n            \"type\": \"EVP\",\n            \"value\": \"8505aab0-933a-4b57-8ce3-ee14be9741f9\"\n        }\n    ]    \n}"
+								},
+								{
+									"name": "422 - Unprocessable Entity",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-owner-id",
+												"value": "{{owner-document}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{bacen}}/api/account/{{ispb}}/{{branch}}/{{account}}/addressing-keys",
+											"host": [
+												"{{bacen}}"
+											],
+											"path": [
+												"api",
+												"account",
+												"{{ispb}}",
+												"{{branch}}",
+												"{{account}}",
+												"addressing-keys"
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {\n        \"branch\": \"0001\",\n        \"number\": \"123456\",\n        \"ispb\": \"13140088\",\n        \"addressingKeys\":[]\n    },\n    \"errors\": [\n        {\n            \"code\": \"DOES_NOT_HAVE_ADDRESSING_KEYS\",\n            \"message\": \"the account does not have registered addressing keys\"\n        }\n    ]\n}"
+								},
+								{
+									"name": "404 - Not Found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-owner-id",
+												"value": "{{owner-document}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{bacen}}/api/account/{{ispb}}/{{branch}}/{{account_number}}/addressing-keys",
+											"host": [
+												"{{bacen}}"
+											],
+											"path": [
+												"api",
+												"account",
+												"{{ispb}}",
+												"{{branch}}",
+												"{{account_number}}",
+												"addressing-keys"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {},\n    \"errors\": [\n        {\n            \"code\": \"ACCOUNT_DOES_NOT_EXISTS\",\n            \"message\": \"The requested account does not exist\"\n        }\n    ]\n}"
+								},
+								{
+									"name": "400 - Bad Request",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-owner-id",
+												"value": "{{owner-document}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{bacen}}/api/account/{{ispb}}/{{branch}}/{{account_number}}/addressing-keys",
+											"host": [
+												"{{bacen}}"
+											],
+											"path": [
+												"api",
+												"account",
+												"{{ispb}}",
+												"{{branch}}",
+												"{{account_number}}",
+												"addressing-keys"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"errors\": [\n       {\n            \"code\": \"INVALID_ACCOUNT_BRANCH\",\n            \"message\": \"The account branch entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ACCOUNT_NUMBER\",\n            \"message\": \"The account number entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ISPB\",\n            \"message\": \"The ispb entered is invalid\"\n        }\n    ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Claims",
+					"item": [
+						{
+							"name": "Register Claim",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseJson = pm.response.json();",
+											"let {id} = responseJson.data;",
+											"pm.environment.set(\"claim_id\", id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"PORTABILITY\",\n    \"claimer\": {\n        \"account\": {\n            \"branch\": \"0001\",\n            \"number\": \"{{account_number}}\",\n            \"ispb\": \"{{ispb}}\"\n        },\n        \"document\": \"{{document}}\"\n    },\n    \"addressingKey\": {\n        \"type\": \"CPF\",\n        \"value\": \"{{document}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{bacen}}/api/pix/claims",
+									"host": [
+										"{{bacen}}"
+									],
+									"path": [
+										"api",
+										"pix",
+										"claims"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "201 - Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"type\": \"PORTABILITY\",\n    \"claimer\":{\n        \"account\":{\n            \"branch\": \"0001\",\n            \"number\": \"12345\",\n            \"ispb\": \"13140088\"\n        },\n        \"document\": \"56796857011\" \n    },\n    \"addressingKey\":{\n        \"value\": \"CPF\",\n        \"type\": \"56796857011\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{bacen}}/api/pix/claims",
+											"host": [
+												"{{bacen}}"
+											],
+											"path": [
+												"api",
+												"pix",
+												"claims"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {\n        \"id\": \"fd19286e-ddb5-47f5-8bdb-7f6f1eb45e6d\",        \n        \"type\": \"PORTABILITY\",\n        \"claimer\":{\n            \"account\":{\n                \"branch\": \"0001\",\n                \"number\": \"12345\",\n                \"ispb\": \"13140088\"\n            },\n            \"document\": \"56796857011\" \n        },\n        \"addressingKey\":{\n            \"value\": \"CPF\",\n            \"type\": \"56796857011\"\n        },\n        \"status\": \"OPEN\",\n        \"createdAt\": \"2023-09-14T20:56:10.123Z\",\n        \"resolutionLimitDate\": \"2023-09-28T20:56:10.123Z\", \n        \"conclusionLimitDate\": \"2023-09-05T20:56:10.123Z\",\n        \"updatedAt\": \"2023-09-05T20:56:10.123Z\"\n    }\n}"
+								},
+								{
+									"name": "400 - Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"type\": \"PORTABILITY\",\n    \"claimer\":{\n        \"account\":{\n            \"branch\": \"0001\",\n            \"number\": \"12345\",\n            \"ispb\": \"13140088\"\n        },\n        \"document\": \"56796857011\" \n    },\n    \"addressingKey\":{\n        \"value\": \"CPF\",\n        \"type\": \"56796857011\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{bacen}}/api/pix/claims",
+											"host": [
+												"{{bacen}}"
+											],
+											"path": [
+												"api",
+												"pix",
+												"claims"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": false,\n    \"isFailure\": true,\n    \"errors\": [       \n        {\n            \"code\": \"INVALID_DOCUMENT\",\n            \"message\": \"The document entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ADDRESSING_KEY\",\n            \"message\": \"Addressing Key value or type is invalid\"\n        },\n        {\n            \"code\": \"ADDRESSING_KEY_DOES_NOT_EXISTS\",\n            \"message\": \"The addressing key does not exists\"\n        },\n        {\n            \"code\": \"INVALID_ACCOUNT_BRANCH\",\n            \"message\": \"The account branch entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ACCOUNT_NUMBER\",\n            \"message\": \"The account number entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ISPB\",\n            \"message\": \"The ispb entered is invalid\"\n        },\n        {\n            \"code\": \"CANNOT_REGISTER_CLAIM_FOR_ADDRESSING_KEY_EVP\",\n            \"message\": \"Can not register claim for addressing key EVP\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Confirm Claim",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// pm.environment.set(\"claim_id\", \"6516c97d116fe4a26936f274\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{bacen}}/api/pix/claims/{{claim_id}}/confirm",
+									"host": [
+										"{{bacen}}"
+									],
+									"path": [
+										"api",
+										"pix",
+										"claims",
+										"{{claim_id}}",
+										"confirm"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200 - Ok",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{bacen}}/pix/claims/{{claim_id}}}/confirm",
+											"host": [
+												"{{bacen}}"
+											],
+											"path": [
+												"pix",
+												"claims",
+												"{{claim_id}}}",
+												"confirm"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {\n        \"id\": \"fd19286e-ddb5-47f5-8bdb-7f6f1eb45e6d\",        \n        \"type\": \"PORTABILITY\",\n        \"claimer\":{\n            \"account\":{\n                \"branch\": \"0001\",\n                \"number\": \"12345\",\n                \"ispb\": \"15140099\"\n            },\n            \"document\": \"56796857011\" \n        },\n        \"donor\":{\n            \"account\":{\n                \"branch\": \"0001\",\n                \"number\": \"54321\",\n                \"ispb\": \"13140088\"\n            },\n            \"document\": \"56796857011\" \n        },\n        \"addressingKey\":{\n            \"value\": \"CPF\",\n            \"type\": \"56796857011\"\n        },\n        \"status\": \"OPEN\",\n        \"createdAt\": \"2023-09-14T20:56:10.123Z\",\n        \"confirmedAt\": \"2023-09-14T21:10:15.123Z\",\n        \"resolutionLimitDate\": \"2023-09-28T20:56:10.123Z\", \n        \"conclusionLimitDate\": \"2023-09-05T20:56:10.123Z\",\n        \"updatedAt\": \"2023-09-05T20:56:10.123Z\"\n    }\n}"
+								},
+								{
+									"name": "404 - NotFound",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{bacen}}/pix/claims/{{claim_id}}/confirm",
+											"host": [
+												"{{bacen}}"
+											],
+											"path": [
+												"pix",
+												"claims",
+												"{{claim_id}}",
+												"confirm"
+											]
+										}
+									},
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {},\n    \"errors\": [\n        {\n            \"code\": \"CLAIM_DOES_NOT_EXISTS\",\n            \"message\": \"The requested claim does not exist\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Claims",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"ispb\",      \"13140099\")",
+											"pm.environment.set(\"startDate\", \"2023-10-03T12:32:05.000Z\")",
+											"pm.environment.set(\"endDate\",   \"2023-10-03T12:33:15.999Z\")"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{bacen}}/api/pix/claims/{{ispb}}?startDate={{startDate}}&endDate={{endDate}}",
+									"host": [
+										"{{bacen}}"
+									],
+									"path": [
+										"api",
+										"pix",
+										"claims",
+										"{{ispb}}"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "{{startDate}}"
+										},
+										{
+											"key": "endDate",
+											"value": "{{endDate}}"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200 - OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{bacen}}/api/claims/{{ispb}}?startDate={{startDate}}&endDate={{endDate}}",
+											"host": [
+												"{{bacen}}"
+											],
+											"path": [
+												"api",
+												"claims",
+												"{{ispb}}"
+											],
+											"query": [
+												{
+													"key": "startDate",
+													"value": "{{startDate}}"
+												},
+												{
+													"key": "endDate",
+													"value": "{{endDate}}"
+												}
+											]
+										}
+									},
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": [\n        {\n            \"id\": \"fd19286e-ddb5-47f5-8bdb-7f6f1eb45e6d\",        \n            \"type\": \"PORTABILITY\",\n            \"claimer\":{\n                \"account\":{\n                    \"branch\": \"0001\",\n                    \"number\": \"12345\",\n                    \"ispb\": \"15140099\"\n                },\n                \"document\": \"56796857011\" \n            },\n            \"donor\":{\n                \"account\":{\n                    \"branch\": \"0001\",\n                    \"number\": \"54321\",\n                    \"ispb\": \"13140088\"\n                },\n                \"document\": \"56796857011\" \n            },\n            \"addressingKey\":{\n                \"value\": \"CPF\",\n                \"type\": \"56796857011\"\n            },\n            \"status\": \"OPEN\",\n            \"createdAt\": \"2023-09-14T20:56:10.123Z\",\n            \"confirmedAt\": \"2023-09-14T21:10:15.123Z\",\n            \"resolutionLimitDate\": \"2023-09-28T20:56:10.123Z\", \n            \"conclusionLimitDate\": \"2023-09-05T20:56:10.123Z\",\n            \"updatedAt\": \"2023-09-05T20:56:10.123Z\"\n        }\n    ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Addressing Keys",
+					"item": [
+						{
+							"name": "Register Addressing Key",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Should validate required fields\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"isSuccess\");",
+											"    pm.expect(pm.response.json()).to.have.property(\"isFailure\");",
+											"    pm.expect(pm.response.json()).to.have.property(\"data\");",
+											"    pm.expect(pm.response.json().data).to.have.property(\"account\");",
+											"    pm.expect(pm.response.json().data).to.have.property(\"addressingKey\");",
+											"});",
+											"",
+											"pm.test(\"Should validate fields types\", function () {",
+											"    pm.expect(pm.response.json().isSuccess).to.be.a(\"boolean\");",
+											"    pm.expect(pm.response.json().isFailure).to.be.a(\"boolean\");",
+											"    pm.expect(pm.response.json().data.account).to.be.an(\"object\");",
+											"    pm.expect(pm.response.json().data.addressingKey).to.be.an(\"object\");",
+											"});",
+											"",
+											"pm.test(\"Should validate fields values\", function () {",
+											"    pm.expect(pm.response.json().isSuccess).to.equal(true);",
+											"    pm.expect(pm.response.json().isFailure).to.equal(false);",
+											"    ",
+											"    pm.expect(pm.response.json().data.account.branch).to.match(/^\\d{4}$/);",
+											"    pm.expect(pm.response.json().data.account.number).to.match(/^\\d{6}$/); ",
+											"    pm.expect(pm.response.json().data.account.ispb).to.match(/^\\d{8}$/);",
+											"    ",
+											"    pm.expect(pm.response.json().data.addressingKey.value).to.be.a(\"string\");",
+											"    pm.expect(pm.response.json().data.addressingKey.type).to.be.a(\"string\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"account\":{\n        \"branch\": \"0001\",\n        \"number\": \"{{account_number}}\",\n        \"ispb\": \"{{ispb}}\"\n    },\n    \"addressingKey\":{\n        \"type\": \"CPF\",\n        \"value\": \"{{document}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{bacen}}/api/pix/entries",
+									"host": [
+										"{{bacen}}"
+									],
+									"path": [
+										"api",
+										"pix",
+										"entries"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "201 - Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"account\":{\n        \"branch\": \"0001\",\n        \"number\": \"12345\",\n        \"ispb\": \"13140088\"\n    },\n    \"owner\":{\n        \"name\": \"João da Silva\",\n        \"document\": \"56796857011\"\n    },\n    \"addressingKey\":{\n        \"type\": \"CPF\",\n        \"value\": \"56796857011\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{bacen}}/api/pix/entries",
+											"host": [
+												"{{bacen}}"
+											],
+											"path": [
+												"api",
+												"pix",
+												"entries"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {\n        \"addressingKey\":{\n            \"type\": \"CPF\",\n            \"value\": \"56796857011\"\n        },\n        \"account\":{\n            \"branch\": \"0001\",\n            \"number\": \"123456\",\n            \"ispb\": \"13140088\"\n        },\n        \"owner\": {\n            \"name\": \"João da Silva\",\n            \"document\": \"56796857011\"\n        },\n        \"createdAt\": \"2023-09-14T20:56:10.123Z\",\n        \"ownedAt\": \"2023-09-14T20:56:10.123Z\",\n        \"status\": \"OWNED\"\n    }\n}"
+								},
+								{
+									"name": "400 - Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{bacen}}/api/pix/entries",
+											"host": [
+												"{{bacen}}"
+											],
+											"path": [
+												"api",
+												"pix",
+												"entries"
+											]
+										}
+									},
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": false,\n    \"isFailure\": true,\n    \"errors\": [       \n        {\n            \"code\": \"INVALID_ADDRESSING_KEY\",\n            \"message\": \"Addressing Key value or type is invalid\"\n        },\n        {\n            \"code\": \"ADDRESSING_KEY_ALREADY_EXISTS\",\n            \"message\": \"The addressing key already exists. Consider open a potability\"\n        },\n        {\n            \"code\": \"INVALID_ACCOUNT_BRANCH\",\n            \"message\": \"The account branch entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ACCOUNT_NUMBER\",\n            \"message\": \"The account number entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ISPB\",\n            \"message\": \"The ispb entered is invalid\"\n        },\n        {\n            \"code\": \"ACCOUNT_DOES_NOT_EXISTIS\",\n            \"message\": \"The account entered does not exists\"\n        },\n        {\n            \"code\": \"AN_ADDRESSING_KEY_MUST_HAVE_ONLY_ONE_OPEN_CLAIM\",\n            \"message\": \"An addressing key must have only one open claim\"\n        }\n    ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{bacen}}/hc",
+							"host": [
+								"{{bacen}}"
+							],
+							"path": [
+								"hc"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Representação simplificada da api do Banco Central"
+		},
+		{
+			"name": "Vulture Bank",
+			"item": [
+				{
+					"name": "Accounts",
+					"item": [
+						{
+							"name": "Create Account",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const checkPropertyExists = (property) => {",
+											"    pm.expect(pm.response.json()).to.have.property(property);",
+											"}",
+											"",
+											"const checkPropertyIsObject = (property) => {",
+											"    pm.expect(pm.response.json()[property]).to.be.an('object');",
+											"}",
+											"",
+											"const checkDataPropertyExists = (property) => {",
+											"    pm.expect(pm.response.json().data).to.have.property(property);",
+											"}",
+											"",
+											"const checkOwnerPropertyExists = (property) => {",
+											"    pm.expect(pm.response.json().data.owner).to.have.property(property);",
+											"}",
+											"",
+											"pm.test(\"Response has isSuccess property\", () => {",
+											"    checkPropertyExists('isSuccess');",
+											"});",
+											"",
+											"pm.test(\"Response has isFailure property\", () => {",
+											"    checkPropertyExists('isFailure');",
+											"});",
+											"",
+											"pm.test(\"Response has data property\", () => {",
+											"    checkPropertyExists('data');",
+											"});",
+											"",
+											"pm.test(\"data property is an object\", () => {",
+											"    checkPropertyIsObject('data');",
+											"});",
+											"",
+											"pm.test(\"data object has branch property\", () => {",
+											"    checkDataPropertyExists('branch');",
+											"});",
+											"",
+											"pm.test(\"data object has number property\", () => {",
+											"    checkDataPropertyExists('number');",
+											"});",
+											"",
+											"pm.test(\"data object has balance property\", () => {",
+											"    checkDataPropertyExists('balance');",
+											"});",
+											"",
+											"pm.test(\"data object has ispb property\", () => {",
+											"    checkDataPropertyExists('ispb');",
+											"});",
+											"",
+											"pm.test(\"data object has owner property\", () => {",
+											"    checkDataPropertyExists('owner');",
+											"});",
+											"",
+											"pm.test(\"owner object has name property\", () => {",
+											"    checkOwnerPropertyExists('name');",
+											"});",
+											"",
+											"pm.test(\"owner object has document property\", () => {",
+											"    checkOwnerPropertyExists('document');",
+											"});",
+											"",
+											"pm.test(\"owner object has phone property\", () => {",
+											"    checkOwnerPropertyExists('phone');",
+											"});",
+											"",
+											"pm.test(\"owner object has email property\", () => {",
+											"    checkOwnerPropertyExists('email');",
+											"});",
+											"",
+											"pm.test(\"data object has createdAt property\", () => {",
+											"    checkDataPropertyExists('createdAt');",
+											"});",
+											"",
+											"pm.test(\"data object has status property\", () => {",
+											"    checkDataPropertyExists('status');",
+											"});",
+											"",
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(\"OK\");",
+											"    pm.expect(pm.response.json().isSuccess).to.be.true;",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"branch\": \"0001\",\n    \"number\": \"{{account_number}}\",\n    \"balance\": 0.0,    \n    \"owner\": {\n        \"name\": \"João da Silva\",\n        \"document\": \"{{document}}\",\n        \"phone\": \"+5584988734455\",\n        \"email\": \"benicio47@gmail.com\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{vulture}}/api/account",
+									"host": [
+										"{{vulture}}"
+									],
+									"path": [
+										"api",
+										"account"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "201 - Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"branch\": \"0001\",\n    \"number\": \"123456\",\n    \"balance\": 0.0,\n    \"ispb\": \"13140088\",\n    \"owner\":{\n        \"name\": \"João da Silva\",\n        \"document\": \"56796857011\",\n        \"phone\": \"57955117333\",\n        \"email\": \"benicio47@gmail.com\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/account",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"account"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {\n        \"branch\": \"0001\",\n        \"number\": \"123456\",\n        \"balance\": 0.0,\n        \"ispb\": \"13140088\",\n        \"owner\": {\n            \"name\": \"João da Silva\",\n            \"document\": \"56796857011\",\n            \"phone\": \"57955117333\",\n            \"email\": \"benicio47@gmail.com\"\n        },\n        \"createdAt\": \"2023-09-14T20:56:10.123Z\",\n        \"status\": \"ACTIVE\"\n    }\n}"
+								},
+								{
+									"name": "400 - Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/account",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"account"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": false,\n    \"isFailure\": true,\n    \"errors\":[\n        {\n            \"code\": \"INVALID_OWNER_NAME\",\n            \"message\": \"The owner name entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_DOCUMENT\",\n            \"message\": \"The document entered is invalid\"\n        },\n        {\n            \"code\": \"DOCUMENT_ALREADY_REGISTERED\",\n            \"message\": \"The onwer entered document already has a registered account for this bank\"\n        },\n        {\n            \"code\": \"INVALID_PHONE_NUMBER\",\n            \"message\": \"The phone number entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_EMAIL\",\n            \"message\": \"The e-mail entered is invalid\"\n        },        \n        {\n            \"code\": \"INVALID_ACCOUNT_BRANCH\",\n            \"message\": \"The account branch entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ACCOUNT_NUMBER\",\n            \"message\": \"The account number entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ISPB\",\n            \"message\": \"The ispb entered is invalid\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Account Addressing Keys",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// pm.environment.set(\"branch\", \"0001\")",
+											"// pm.environment.set(\"account_number\", \"123464\")",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{vulture}}/api/account/{{branch}}/{{account_number}}/addressing-keys",
+									"host": [
+										"{{vulture}}"
+									],
+									"path": [
+										"api",
+										"account",
+										"{{branch}}",
+										"{{account_number}}",
+										"addressing-keys"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200 - OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-owner-id",
+												"value": "{{owner-document}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/account/{{branch}}/{{account_number}}/addressing-keys",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"account",
+												"{{branch}}",
+												"{{account_number}}",
+												"addressing-keys"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": [\n        {\n            \"type\": \"CPF\",\n            \"value\": \"56796857011\"\n        },\n        {\n            \"type\": \"PHONE\",\n            \"value\": \"+5584991929394\"\n        },\n        {\n            \"type\": \"EMAIL\",\n            \"value\": \"joaosilva@email.com\"\n        },\n        {\n            \"type\": \"EVP\",\n            \"value\": \"8505aab0-933a-4b57-8ce3-ee14be9741f9\"\n        }\n    ]    \n}"
+								},
+								{
+									"name": "422 - Unprocessable Entity",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-owner-id",
+												"value": "{{owner-document}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/account/{{branch}}/{{account_number}}/addressing-keys",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"account",
+												"{{branch}}",
+												"{{account_number}}",
+												"addressing-keys"
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {\n        \"branch\": \"0001\",\n        \"number\": \"123456\",\n        \"ispb\": \"13140088\",\n        \"addressingKeys\":[]\n    },\n    \"errors\": [\n        {\n            \"code\": \"DOES_NOT_HAVE_ADDRESSING_KEYS\",\n            \"message\": \"the account does not have registered addressing keys\"\n        }\n    ]\n}"
+								},
+								{
+									"name": "404 - Not Found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-owner-id",
+												"value": "{{owner-document}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/account/{{branch}}/{{account_number}}/addressing-keys",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"account",
+												"{{branch}}",
+												"{{account_number}}",
+												"addressing-keys"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {},\n    \"errors\": [\n        {\n            \"code\": \"ACCOUNT_DOES_NOT_EXISTS\",\n            \"message\": \"The requested account does not exist\"\n        }\n    ]\n}"
+								},
+								{
+									"name": "400 - Bad Request",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-owner-id",
+												"value": "{{owner-document}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/account/{{branch}}/{{account_number}}/addressing-keys",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"account",
+												"{{branch}}",
+												"{{account_number}}",
+												"addressing-keys"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"errors\": [\n       {\n            \"code\": \"INVALID_ACCOUNT_BRANCH\",\n            \"message\": \"The account branch entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ACCOUNT_NUMBER\",\n            \"message\": \"The account number entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ISPB\",\n            \"message\": \"The ispb entered is invalid\"\n        }\n    ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Claims",
+					"item": [
+						{
+							"name": "Register Claim",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseJson = pm.response.json();",
+											"let {id} = responseJson.data;",
+											"pm.environment.set(\"claim_id\", id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"PORTABILITY\",\n    \"claimer\": {\n        \"account\": {\n            \"branch\": \"0001\",\n            \"number\": \"{{account_number}}\"\n        },\n        \"document\": \"{{document}}\"\n    },\n    \"addressingKey\": {\n        \"type\": \"{{addressingkey_type}}\",\n        \"value\": \"{{addressingkey_value}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{vulture}}/api/pix/claims",
+									"host": [
+										"{{vulture}}"
+									],
+									"path": [
+										"api",
+										"pix",
+										"claims"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "201 - Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"type\": \"PORTABILITY\",\n    \"claimer\":{\n        \"account\":{\n            \"branch\": \"0001\",\n            \"number\": \"12345\",\n            \"ispb\": \"13140088\"\n        },\n        \"document\": \"56796857011\" \n    },\n    \"addressingKey\":{\n        \"value\": \"CPF\",\n        \"type\": \"56796857011\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/pix/claims",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"pix",
+												"claims"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {\n        \"id\": \"fd19286e-ddb5-47f5-8bdb-7f6f1eb45e6d\",        \n        \"type\": \"PORTABILITY\",\n        \"claimer\":{\n            \"account\":{\n                \"branch\": \"0001\",\n                \"number\": \"12345\",\n                \"ispb\": \"13140088\"\n            },\n            \"document\": \"56796857011\" \n        },\n        \"addressingKey\":{\n            \"value\": \"CPF\",\n            \"type\": \"56796857011\"\n        },\n        \"status\": \"OPEN\",\n        \"createdAt\": \"2023-09-14T20:56:10.123Z\",\n        \"resolutionLimitDate\": \"2023-09-28T20:56:10.123Z\", \n        \"conclusionLimitDate\": \"2023-09-05T20:56:10.123Z\",\n        \"updatedAt\": \"2023-09-05T20:56:10.123Z\"\n    }\n}"
+								},
+								{
+									"name": "400 - Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"type\": \"PORTABILITY\",\n    \"claimer\":{\n        \"account\":{\n            \"branch\": \"0001\",\n            \"number\": \"12345\",\n            \"ispb\": \"13140088\"\n        },\n        \"document\": \"56796857011\" \n    },\n    \"addressingKey\":{\n        \"value\": \"CPF\",\n        \"type\": \"56796857011\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/pix/claims",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"pix",
+												"claims"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": false,\n    \"isFailure\": true,\n    \"errors\": [       \n        {\n            \"code\": \"INVALID_DOCUMENT\",\n            \"message\": \"The document entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ADDRESSING_KEY\",\n            \"message\": \"Addressing Key value or type is invalid\"\n        },\n        {\n            \"code\": \"ADDRESSING_KEY_DOES_NOT_EXISTS\",\n            \"message\": \"The addressing key does not exists\"\n        },\n        {\n            \"code\": \"INVALID_ACCOUNT_BRANCH\",\n            \"message\": \"The account branch entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ACCOUNT_NUMBER\",\n            \"message\": \"The account number entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ISPB\",\n            \"message\": \"The ispb entered is invalid\"\n        },\n        {\n            \"code\": \"CANNOT_REGISTER_CLAIM_FOR_ADDRESSING_KEY_EVP\",\n            \"message\": \"Can not register claim for addressing key EVP\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Confirm Claim",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// pm.environment.set(\"claim_id\", \"6516c97d116fe4a26936f274\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{vulture}}/api/pix/claims/{{claim_id}}/confirm",
+									"host": [
+										"{{vulture}}"
+									],
+									"path": [
+										"api",
+										"pix",
+										"claims",
+										"{{claim_id}}",
+										"confirm"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200 - Ok",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{vulture}}/pix/claims/{{claim_id}}/confirm",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"pix",
+												"claims",
+												"{{claim_id}}",
+												"confirm"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {\n        \"id\": \"fd19286e-ddb5-47f5-8bdb-7f6f1eb45e6d\",        \n        \"type\": \"PORTABILITY\",\n        \"claimer\":{\n            \"account\":{\n                \"branch\": \"0001\",\n                \"number\": \"12345\",\n                \"ispb\": \"15140099\"\n            },\n            \"document\": \"56796857011\" \n        },\n        \"donor\":{\n            \"account\":{\n                \"branch\": \"0001\",\n                \"number\": \"54321\",\n                \"ispb\": \"13140088\"\n            },\n            \"document\": \"56796857011\" \n        },\n        \"addressingKey\":{\n            \"value\": \"CPF\",\n            \"type\": \"56796857011\"\n        },\n        \"status\": \"OPEN\",\n        \"createdAt\": \"2023-09-14T20:56:10.123Z\",\n        \"confirmedAt\": \"2023-09-14T21:10:15.123Z\",\n        \"resolutionLimitDate\": \"2023-09-28T20:56:10.123Z\", \n        \"conclusionLimitDate\": \"2023-09-05T20:56:10.123Z\",\n        \"updatedAt\": \"2023-09-05T20:56:10.123Z\"\n    }\n}"
+								},
+								{
+									"name": "404 - NotFound",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{vulture}}/pix/claims/{{claim_id}}/confirm",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"pix",
+												"claims",
+												"{{claim_id}}",
+												"confirm"
+											]
+										}
+									},
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {},\n    \"errors\": [\n        {\n            \"code\": \"CLAIM_DOES_NOT_EXISTS\",\n            \"message\": \"The requested claim does not exist\"\n        }\n    ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Addressing Keys",
+					"item": [
+						{
+							"name": "Register Addressing Key",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Should validate required fields\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"isSuccess\");",
+											"    pm.expect(pm.response.json()).to.have.property(\"isFailure\");",
+											"    pm.expect(pm.response.json()).to.have.property(\"data\");",
+											"    pm.expect(pm.response.json().data).to.have.property(\"account\");",
+											"    pm.expect(pm.response.json().data).to.have.property(\"addressingKey\");",
+											"});",
+											"",
+											"pm.test(\"Should validate fields types\", function () {",
+											"    pm.expect(pm.response.json().isSuccess).to.be.a(\"boolean\");",
+											"    pm.expect(pm.response.json().isFailure).to.be.a(\"boolean\");",
+											"    pm.expect(pm.response.json().data.account).to.be.an(\"object\");",
+											"    pm.expect(pm.response.json().data.addressingKey).to.be.an(\"object\");",
+											"});",
+											"",
+											"pm.test(\"Should validate fields values\", function () {",
+											"    pm.expect(pm.response.json().isSuccess).to.equal(true);",
+											"    pm.expect(pm.response.json().isFailure).to.equal(false);",
+											"    ",
+											"    pm.expect(pm.response.json().data.account.branch).to.match(/^\\d{4}$/);",
+											"    pm.expect(pm.response.json().data.account.number).to.match(/^\\d{6}$/); ",
+											"    pm.expect(pm.response.json().data.account.ispb).to.match(/^\\d{8}$/);",
+											"    ",
+											"    pm.expect(pm.response.json().data.addressingKey.value).to.be.a(\"string\");",
+											"    pm.expect(pm.response.json().data.addressingKey.type).to.be.a(\"string\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// pm.environment.set(\"account_number\", \"123461\")",
+											"// pm.environment.set(\"addressingkey_type\", \"PHONE\")",
+											"// pm.environment.set(\"addressingkey_value\", \"+5581991767615\")"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"account\": {\n        \"branch\": \"0001\",\n        \"number\": \"{{account_number}}\"\n    },\n    \"owner\":{\n        \"name\": \"João da Silva\",\n        \"document\": \"{{document}}\"\n    },\n    \"addressingKey\": {\n        \"type\": \"{{addressingkey_type}}\",\n        \"value\": \"{{addressingkey_value}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{vulture}}/api/pix/entries",
+									"host": [
+										"{{vulture}}"
+									],
+									"path": [
+										"api",
+										"pix",
+										"entries"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "201 - Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"account\":{\n        \"branch\": \"0001\",\n        \"number\": \"12345\",\n        \"ispb\": \"13140088\"\n    },\n    \"owner\":{\n        \"name\": \"João da Silva\",\n        \"document\": \"56796857011\"\n    },\n    \"addressingKey\":{\n        \"type\": \"CPF\",\n        \"value\": \"56796857011\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/pix/entries",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"pix",
+												"entries"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {\n        \"addressingKey\":{\n            \"type\": \"CPF\",\n            \"value\": \"56796857011\"\n        },\n        \"account\":{\n            \"branch\": \"0001\",\n            \"number\": \"123456\",\n            \"ispb\": \"13140088\"\n        },\n        \"owner\": {\n            \"name\": \"João da Silva\",\n            \"document\": \"56796857011\"\n        },\n        \"createdAt\": \"2023-09-14T20:56:10.123Z\",\n        \"ownedAt\": \"2023-09-14T20:56:10.123Z\",\n        \"status\": \"OWNED\"\n    }\n}"
+								},
+								{
+									"name": "400 - Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/pix/entries",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"pix",
+												"entries"
+											]
+										}
+									},
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": false,\n    \"isFailure\": true,\n    \"errors\": [       \n        {\n            \"code\": \"INVALID_ADDRESSING_KEY\",\n            \"message\": \"Addressing Key value or type is invalid\"\n        },\n        {\n            \"code\": \"ADDRESSING_KEY_ALREADY_EXISTS\",\n            \"message\": \"The addressing key already exists. Consider open a potability\"\n        },\n        {\n            \"code\": \"INVALID_ACCOUNT_BRANCH\",\n            \"message\": \"The account branch entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ACCOUNT_NUMBER\",\n            \"message\": \"The account number entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ISPB\",\n            \"message\": \"The ispb entered is invalid\"\n        },\n        {\n            \"code\": \"ACCOUNT_DOES_NOT_EXISTIS\",\n            \"message\": \"The account entered does not exists\"\n        },\n        {\n            \"code\": \"AN_ADDRESSING_KEY_MUST_HAVE_ONLY_ONE_OPEN_CLAIM\",\n            \"message\": \"An addressing key must have only one open claim\"\n        }\n    ]\n}"
+								}
+							]
+						}
+					]
+				}
+			],
+			"description": "Representação simplificada da api do Banco Central"
+		},
+		{
+			"name": "Star Bank",
+			"item": [
+				{
+					"name": "Accounts",
+					"item": [
+						{
+							"name": "Create Account",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const checkPropertyExists = (property) => {",
+											"    pm.expect(pm.response.json()).to.have.property(property);",
+											"}",
+											"",
+											"const checkPropertyIsObject = (property) => {",
+											"    pm.expect(pm.response.json()[property]).to.be.an('object');",
+											"}",
+											"",
+											"const checkDataPropertyExists = (property) => {",
+											"    pm.expect(pm.response.json().data).to.have.property(property);",
+											"}",
+											"",
+											"const checkOwnerPropertyExists = (property) => {",
+											"    pm.expect(pm.response.json().data.owner).to.have.property(property);",
+											"}",
+											"",
+											"pm.test(\"Response has isSuccess property\", () => {",
+											"    checkPropertyExists('isSuccess');",
+											"});",
+											"",
+											"pm.test(\"Response has isFailure property\", () => {",
+											"    checkPropertyExists('isFailure');",
+											"});",
+											"",
+											"pm.test(\"Response has data property\", () => {",
+											"    checkPropertyExists('data');",
+											"});",
+											"",
+											"pm.test(\"data property is an object\", () => {",
+											"    checkPropertyIsObject('data');",
+											"});",
+											"",
+											"pm.test(\"data object has branch property\", () => {",
+											"    checkDataPropertyExists('branch');",
+											"});",
+											"",
+											"pm.test(\"data object has number property\", () => {",
+											"    checkDataPropertyExists('number');",
+											"});",
+											"",
+											"pm.test(\"data object has balance property\", () => {",
+											"    checkDataPropertyExists('balance');",
+											"});",
+											"",
+											"pm.test(\"data object has ispb property\", () => {",
+											"    checkDataPropertyExists('ispb');",
+											"});",
+											"",
+											"pm.test(\"data object has owner property\", () => {",
+											"    checkDataPropertyExists('owner');",
+											"});",
+											"",
+											"pm.test(\"owner object has name property\", () => {",
+											"    checkOwnerPropertyExists('name');",
+											"});",
+											"",
+											"pm.test(\"owner object has document property\", () => {",
+											"    checkOwnerPropertyExists('document');",
+											"});",
+											"",
+											"pm.test(\"owner object has phone property\", () => {",
+											"    checkOwnerPropertyExists('phone');",
+											"});",
+											"",
+											"pm.test(\"owner object has email property\", () => {",
+											"    checkOwnerPropertyExists('email');",
+											"});",
+											"",
+											"pm.test(\"data object has createdAt property\", () => {",
+											"    checkDataPropertyExists('createdAt');",
+											"});",
+											"",
+											"pm.test(\"data object has status property\", () => {",
+											"    checkDataPropertyExists('status');",
+											"});",
+											"",
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.response.to.have.status(\"OK\");",
+											"    pm.expect(pm.response.json().isSuccess).to.be.true;",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"branch\": \"0001\",\n    \"number\": \"{{account_number}}\",\n    \"balance\": 0.0,    \n    \"owner\": {\n        \"name\": \"João da Silva\",\n        \"document\": \"{{document}}\",\n        \"phone\": \"+5584988734455\",\n        \"email\": \"benicio47@gmail.com\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{star_accounts}}/api/account",
+									"host": [
+										"{{star_accounts}}"
+									],
+									"path": [
+										"api",
+										"account"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "201 - Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"branch\": \"0001\",\n    \"number\": \"123456\",\n    \"balance\": 0.0,\n    \"ispb\": \"13140088\",\n    \"owner\":{\n        \"name\": \"João da Silva\",\n        \"document\": \"56796857011\",\n        \"phone\": \"57955117333\",\n        \"email\": \"benicio47@gmail.com\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/account",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"account"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {\n        \"branch\": \"0001\",\n        \"number\": \"123456\",\n        \"balance\": 0.0,\n        \"ispb\": \"13140088\",\n        \"owner\": {\n            \"name\": \"João da Silva\",\n            \"document\": \"56796857011\",\n            \"phone\": \"57955117333\",\n            \"email\": \"benicio47@gmail.com\"\n        },\n        \"createdAt\": \"2023-09-14T20:56:10.123Z\",\n        \"status\": \"ACTIVE\"\n    }\n}"
+								},
+								{
+									"name": "400 - Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/account",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"account"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": false,\n    \"isFailure\": true,\n    \"errors\":[\n        {\n            \"code\": \"INVALID_OWNER_NAME\",\n            \"message\": \"The owner name entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_DOCUMENT\",\n            \"message\": \"The document entered is invalid\"\n        },\n        {\n            \"code\": \"DOCUMENT_ALREADY_REGISTERED\",\n            \"message\": \"The onwer entered document already has a registered account for this bank\"\n        },\n        {\n            \"code\": \"INVALID_PHONE_NUMBER\",\n            \"message\": \"The phone number entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_EMAIL\",\n            \"message\": \"The e-mail entered is invalid\"\n        },        \n        {\n            \"code\": \"INVALID_ACCOUNT_BRANCH\",\n            \"message\": \"The account branch entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ACCOUNT_NUMBER\",\n            \"message\": \"The account number entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ISPB\",\n            \"message\": \"The ispb entered is invalid\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Account Addressing Keys",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// pm.environment.set(\"branch\", \"0001\")",
+											"// pm.environment.set(\"account_number\", \"654331\")",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{star_accounts}}/api/account/{{branch}}/{{account_number}}/addressing-keys",
+									"host": [
+										"{{star_accounts}}"
+									],
+									"path": [
+										"api",
+										"account",
+										"{{branch}}",
+										"{{account_number}}",
+										"addressing-keys"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200 - OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-owner-id",
+												"value": "{{owner-document}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/account/{{branch}}/{{account_number}}/addressing-keys",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"account",
+												"{{branch}}",
+												"{{account_number}}",
+												"addressing-keys"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": [\n        {\n            \"type\": \"CPF\",\n            \"value\": \"56796857011\"\n        },\n        {\n            \"type\": \"PHONE\",\n            \"value\": \"+5584991929394\"\n        },\n        {\n            \"type\": \"EMAIL\",\n            \"value\": \"joaosilva@email.com\"\n        },\n        {\n            \"type\": \"EVP\",\n            \"value\": \"8505aab0-933a-4b57-8ce3-ee14be9741f9\"\n        }\n    ]    \n}"
+								},
+								{
+									"name": "422 - Unprocessable Entity",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-owner-id",
+												"value": "{{owner-document}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/account/{{branch}}/{{account_number}}/addressing-keys",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"account",
+												"{{branch}}",
+												"{{account_number}}",
+												"addressing-keys"
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {\n        \"branch\": \"0001\",\n        \"number\": \"123456\",\n        \"ispb\": \"13140088\",\n        \"addressingKeys\":[]\n    },\n    \"errors\": [\n        {\n            \"code\": \"DOES_NOT_HAVE_ADDRESSING_KEYS\",\n            \"message\": \"the account does not have registered addressing keys\"\n        }\n    ]\n}"
+								},
+								{
+									"name": "404 - Not Found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-owner-id",
+												"value": "{{owner-document}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/account/{{branch}}/{{account_number}}/addressing-keys",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"account",
+												"{{branch}}",
+												"{{account_number}}",
+												"addressing-keys"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {},\n    \"errors\": [\n        {\n            \"code\": \"ACCOUNT_DOES_NOT_EXISTS\",\n            \"message\": \"The requested account does not exist\"\n        }\n    ]\n}"
+								},
+								{
+									"name": "400 - Bad Request",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-owner-id",
+												"value": "{{owner-document}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/account/{{branch}}/{{account_number}}/addressing-keys",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"account",
+												"{{branch}}",
+												"{{account_number}}",
+												"addressing-keys"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"errors\": [\n       {\n            \"code\": \"INVALID_ACCOUNT_BRANCH\",\n            \"message\": \"The account branch entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ACCOUNT_NUMBER\",\n            \"message\": \"The account number entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ISPB\",\n            \"message\": \"The ispb entered is invalid\"\n        }\n    ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Claims",
+					"item": [
+						{
+							"name": "Register Claim",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseJson = pm.response.json();",
+											"let {id} = responseJson.data;",
+											"pm.environment.set(\"claim_id\", id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"PORTABILITY\",\n    \"claimer\": {\n        \"account\": {\n            \"branch\": \"0001\",\n            \"number\": \"{{account_number}}\"\n        },\n        \"document\": \"{{document}}\"\n    },\n    \"addressingKey\": {\n        \"type\": \"{{addressingkey_type}}\",\n        \"value\": \"{{addressingkey_value}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{star_claims}}/api/pix/claims",
+									"host": [
+										"{{star_claims}}"
+									],
+									"path": [
+										"api",
+										"pix",
+										"claims"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "201 - Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"type\": \"PORTABILITY\",\n    \"claimer\":{\n        \"account\":{\n            \"branch\": \"0001\",\n            \"number\": \"12345\",\n            \"ispb\": \"13140088\"\n        },\n        \"document\": \"56796857011\" \n    },\n    \"addressingKey\":{\n        \"value\": \"CPF\",\n        \"type\": \"56796857011\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/pix/claims",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"pix",
+												"claims"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {\n        \"id\": \"fd19286e-ddb5-47f5-8bdb-7f6f1eb45e6d\",        \n        \"type\": \"PORTABILITY\",\n        \"claimer\":{\n            \"account\":{\n                \"branch\": \"0001\",\n                \"number\": \"12345\",\n                \"ispb\": \"13140088\"\n            },\n            \"document\": \"56796857011\" \n        },\n        \"addressingKey\":{\n            \"value\": \"CPF\",\n            \"type\": \"56796857011\"\n        },\n        \"status\": \"OPEN\",\n        \"createdAt\": \"2023-09-14T20:56:10.123Z\",\n        \"resolutionLimitDate\": \"2023-09-28T20:56:10.123Z\", \n        \"conclusionLimitDate\": \"2023-09-05T20:56:10.123Z\",\n        \"updatedAt\": \"2023-09-05T20:56:10.123Z\"\n    }\n}"
+								},
+								{
+									"name": "400 - Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"type\": \"PORTABILITY\",\n    \"claimer\":{\n        \"account\":{\n            \"branch\": \"0001\",\n            \"number\": \"12345\",\n            \"ispb\": \"13140088\"\n        },\n        \"document\": \"56796857011\" \n    },\n    \"addressingKey\":{\n        \"value\": \"CPF\",\n        \"type\": \"56796857011\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/pix/claims",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"pix",
+												"claims"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": false,\n    \"isFailure\": true,\n    \"errors\": [       \n        {\n            \"code\": \"INVALID_DOCUMENT\",\n            \"message\": \"The document entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ADDRESSING_KEY\",\n            \"message\": \"Addressing Key value or type is invalid\"\n        },\n        {\n            \"code\": \"ADDRESSING_KEY_DOES_NOT_EXISTS\",\n            \"message\": \"The addressing key does not exists\"\n        },\n        {\n            \"code\": \"INVALID_ACCOUNT_BRANCH\",\n            \"message\": \"The account branch entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ACCOUNT_NUMBER\",\n            \"message\": \"The account number entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ISPB\",\n            \"message\": \"The ispb entered is invalid\"\n        },\n        {\n            \"code\": \"CANNOT_REGISTER_CLAIM_FOR_ADDRESSING_KEY_EVP\",\n            \"message\": \"Can not register claim for addressing key EVP\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Confirm Claim",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// pm.environment.set(\"claim_id\", \"6516c97d116fe4a26936f274\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{star_claims}}/api/pix/claims/{{claim_id}}/confirm",
+									"host": [
+										"{{star_claims}}"
+									],
+									"path": [
+										"api",
+										"pix",
+										"claims",
+										"{{claim_id}}",
+										"confirm"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200 - Ok",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{vulture}}/pix/claims/{{claim_id}}/confirm",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"pix",
+												"claims",
+												"{{claim_id}}",
+												"confirm"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {\n        \"id\": \"fd19286e-ddb5-47f5-8bdb-7f6f1eb45e6d\",        \n        \"type\": \"PORTABILITY\",\n        \"claimer\":{\n            \"account\":{\n                \"branch\": \"0001\",\n                \"number\": \"12345\",\n                \"ispb\": \"15140099\"\n            },\n            \"document\": \"56796857011\" \n        },\n        \"donor\":{\n            \"account\":{\n                \"branch\": \"0001\",\n                \"number\": \"54321\",\n                \"ispb\": \"13140088\"\n            },\n            \"document\": \"56796857011\" \n        },\n        \"addressingKey\":{\n            \"value\": \"CPF\",\n            \"type\": \"56796857011\"\n        },\n        \"status\": \"OPEN\",\n        \"createdAt\": \"2023-09-14T20:56:10.123Z\",\n        \"confirmedAt\": \"2023-09-14T21:10:15.123Z\",\n        \"resolutionLimitDate\": \"2023-09-28T20:56:10.123Z\", \n        \"conclusionLimitDate\": \"2023-09-05T20:56:10.123Z\",\n        \"updatedAt\": \"2023-09-05T20:56:10.123Z\"\n    }\n}"
+								},
+								{
+									"name": "404 - NotFound",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{vulture}}/pix/claims/{{claim_id}}/confirm",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"pix",
+												"claims",
+												"{{claim_id}}",
+												"confirm"
+											]
+										}
+									},
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {},\n    \"errors\": [\n        {\n            \"code\": \"CLAIM_DOES_NOT_EXISTS\",\n            \"message\": \"The requested claim does not exist\"\n        }\n    ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Addressing Keys",
+					"item": [
+						{
+							"name": "Register Addressing Key",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Should validate required fields\", function () {",
+											"    pm.expect(pm.response.json()).to.have.property(\"isSuccess\");",
+											"    pm.expect(pm.response.json()).to.have.property(\"isFailure\");",
+											"    pm.expect(pm.response.json()).to.have.property(\"data\");",
+											"    pm.expect(pm.response.json().data).to.have.property(\"account\");",
+											"    pm.expect(pm.response.json().data).to.have.property(\"addressingKey\");",
+											"});",
+											"",
+											"pm.test(\"Should validate fields types\", function () {",
+											"    pm.expect(pm.response.json().isSuccess).to.be.a(\"boolean\");",
+											"    pm.expect(pm.response.json().isFailure).to.be.a(\"boolean\");",
+											"    pm.expect(pm.response.json().data.account).to.be.an(\"object\");",
+											"    pm.expect(pm.response.json().data.addressingKey).to.be.an(\"object\");",
+											"});",
+											"",
+											"pm.test(\"Should validate fields values\", function () {",
+											"    pm.expect(pm.response.json().isSuccess).to.equal(true);",
+											"    pm.expect(pm.response.json().isFailure).to.equal(false);",
+											"    ",
+											"    pm.expect(pm.response.json().data.account.branch).to.match(/^\\d{4}$/);",
+											"    pm.expect(pm.response.json().data.account.number).to.match(/^\\d{6}$/); ",
+											"    pm.expect(pm.response.json().data.account.ispb).to.match(/^\\d{8}$/);",
+											"    ",
+											"    pm.expect(pm.response.json().data.addressingKey.value).to.be.a(\"string\");",
+											"    pm.expect(pm.response.json().data.addressingKey.type).to.be.a(\"string\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"account\": {\n        \"branch\": \"0001\",\n        \"number\": \"{{account_number}}\"\n    },\n    \"owner\":{\n        \"name\": \"João da Silva\",\n        \"document\": \"{{document}}\"\n    },\n    \"addressingKey\": {\n        \"type\": \"{{addressingkey_type}}\",\n        \"value\": \"{{addressingkey_value}}\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{star_entries}}/api/pix/entries",
+									"host": [
+										"{{star_entries}}"
+									],
+									"path": [
+										"api",
+										"pix",
+										"entries"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "201 - Created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"account\":{\n        \"branch\": \"0001\",\n        \"number\": \"12345\",\n        \"ispb\": \"13140088\"\n    },\n    \"owner\":{\n        \"name\": \"João da Silva\",\n        \"document\": \"56796857011\"\n    },\n    \"addressingKey\":{\n        \"type\": \"CPF\",\n        \"value\": \"56796857011\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/pix/entries",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"pix",
+												"entries"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": true,\n    \"isFailure\": false,\n    \"data\": {\n        \"addressingKey\":{\n            \"type\": \"CPF\",\n            \"value\": \"56796857011\"\n        },\n        \"account\":{\n            \"branch\": \"0001\",\n            \"number\": \"123456\",\n            \"ispb\": \"13140088\"\n        },\n        \"owner\": {\n            \"name\": \"João da Silva\",\n            \"document\": \"56796857011\"\n        },\n        \"createdAt\": \"2023-09-14T20:56:10.123Z\",\n        \"ownedAt\": \"2023-09-14T20:56:10.123Z\",\n        \"status\": \"OWNED\"\n    }\n}"
+								},
+								{
+									"name": "400 - Bad Request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{vulture}}/api/pix/entries",
+											"host": [
+												"{{vulture}}"
+											],
+											"path": [
+												"api",
+												"pix",
+												"entries"
+											]
+										}
+									},
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"name": "Content-Type",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"isSuccess\": false,\n    \"isFailure\": true,\n    \"errors\": [       \n        {\n            \"code\": \"INVALID_ADDRESSING_KEY\",\n            \"message\": \"Addressing Key value or type is invalid\"\n        },\n        {\n            \"code\": \"ADDRESSING_KEY_ALREADY_EXISTS\",\n            \"message\": \"The addressing key already exists. Consider open a potability\"\n        },\n        {\n            \"code\": \"INVALID_ACCOUNT_BRANCH\",\n            \"message\": \"The account branch entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ACCOUNT_NUMBER\",\n            \"message\": \"The account number entered is invalid\"\n        },\n        {\n            \"code\": \"INVALID_ISPB\",\n            \"message\": \"The ispb entered is invalid\"\n        },\n        {\n            \"code\": \"ACCOUNT_DOES_NOT_EXISTIS\",\n            \"message\": \"The account entered does not exists\"\n        },\n        {\n            \"code\": \"AN_ADDRESSING_KEY_MUST_HAVE_ONLY_ONE_OPEN_CLAIM\",\n            \"message\": \"An addressing key must have only one open claim\"\n        }\n    ]\n}"
+								}
+							]
+						}
+					]
+				}
+			],
+			"description": "Representação simplificada da api do Banco Central"
+		}
+	]
+}
