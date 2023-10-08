@@ -8,6 +8,7 @@ using Shared.Extensions;
 using Shared.HttpClients;
 using Shared.Requests;
 using Shared.Validations;
+using Vulture.Contracts;
 using Vulture.Extensions;
 
 namespace Vulture.Controllers
@@ -44,7 +45,7 @@ namespace Vulture.Controllers
                 return BadRequest(new Response<Entry>(_validator.Errors));
             }
 
-            var result = await _entryClient.RegisterAsync(request);
+            var result = await _entryClient.RegisterAsync(request.WithIspb(Constants.ISPB));
             if (result.IsFailure())
             {                
                 return BadRequest(await result.ToFailureAsync());

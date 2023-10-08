@@ -10,6 +10,7 @@ using Shared.Requests;
 using Shared.Validations;
 using Vulture.Extensions;
 using Shared.Extensions;
+using Vulture.Contracts;
 
 namespace Vulture.Controllers
 {
@@ -41,7 +42,7 @@ namespace Vulture.Controllers
                 return BadRequest(new Response<List<RegisterClaimRequest>>(validator.Errors));
             }
 
-            var result = await _claimClient.RegisterAsync(claimRequest);
+            var result = await _claimClient.RegisterAsync(claimRequest.WithIspb(Constants.ISPB));
             if (result.IsFailure())
             {
                 return BadRequest(await result.ToFailureAsync());

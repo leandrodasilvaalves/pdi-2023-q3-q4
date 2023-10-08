@@ -9,11 +9,13 @@ namespace Shared.Entities
         public Entry()
         {
             Account = new();
+            Owner = new();
             AddressingKey = new();
             Status = EntryStatus.OWNED;
         }
         
         public Models.Account Account { get; set; }
+        public Owner Owner { get; set; }
         public AddressingKey AddressingKey { get; set; }
         public EntryStatus Status { get; set; }
     }

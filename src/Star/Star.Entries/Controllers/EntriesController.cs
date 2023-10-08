@@ -9,6 +9,7 @@ using Shared.HttpClients;
 using Shared.Requests;
 using Shared.Validations;
 using Star.Accounts.Extensions;
+using Star.Entries.Contracts;
 
 namespace Star.Entries.Controllers
 {
@@ -44,7 +45,7 @@ namespace Star.Entries.Controllers
                 return BadRequest(new Response<Entry>(_validator.Errors));
             }
 
-            var result = await _entryClient.RegisterAsync(request);
+            var result = await _entryClient.RegisterAsync(request.WithIspb(Constants.ISPB));
             if (result.IsFailure())
             {
                 return BadRequest(await result.ToFailureAsync());

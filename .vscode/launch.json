@@ -101,5 +101,16 @@
                 "/Views": "${workspaceFolder}/Views"
             }
         }
+    ],
+    "compounds": [
+        {
+            "name": "Many Apis",
+            "configurations": [
+                "Vulture (webapi)",
+                "Bacen (webapi)", 
+                "Star Claims (webapi)",   
+            ],
+            "stopAll": true
+        }
     ]
 }

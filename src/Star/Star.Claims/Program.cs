@@ -18,7 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureOptions(builder.Configuration);
 builder.Services.AddRepositories();
-builder.Services.AddValidators();
+builder.Services.AddStarValidators();
 builder.Services.AddBacenHttpClients(builder.Configuration);
 builder.Services.ConfigureKafka(builder.Configuration, "Kafka")
     .AddPublishers<Claim>()
@@ -30,13 +30,8 @@ builder.Services.AddHostedService<ClaimsWorker>();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

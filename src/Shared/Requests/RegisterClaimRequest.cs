@@ -16,5 +16,11 @@ namespace Shared.Requests
             Claimer = Claimer,
             AddressingKey = AddressingKey,
         };
+
+        public  RegisterClaimRequest WithIspb(string ispb)
+        {
+            Claimer.Account.Ispb = ispb;
+            return this;
+        }
     }
 }
