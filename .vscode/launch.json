@@ -61,5 +61,45 @@
                 "/Views": "${workspaceFolder}/Views"
             }
         },
+        {
+            "name": "Star Entries (webapi)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-star-entries",
+            "program": "${workspaceFolder}/src/Star/Star.Entries/bin/Debug/net7.0/Star.Entries.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Star/Star.Entries",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "Star Claims (webapi)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-star-claims",
+            "program": "${workspaceFolder}/src/Star/Star.Claims/bin/Debug/net7.0/Star.Claims.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Star/Star.Claims",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        }
     ]
 }

@@ -18,4 +18,4 @@ do
     sleep $i
 done
 
-docker-compose logs --follow --tail=all bacen star-entries star-accounts vulture 
+docker-compose logs --follow --tail=all bacen star-entries star-accounts star-claims vulture 

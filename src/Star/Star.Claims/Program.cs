@@ -1,15 +1,35 @@
+using System.Text.Json.Serialization;
+using Shared.Contracts.Models;
+using Shared.Entities;
+using Shared.Extensions;
+using Star.Claims.Consumers;
+using Star.Claims.Workers;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.ConfigureOptions(builder.Configuration);
+builder.Services.AddRepositories();
+builder.Services.AddValidators();
+builder.Services.AddBacenHttpClients(builder.Configuration);
+builder.Services.ConfigureKafka(builder.Configuration, "Kafka")
+    .AddPublishers<Claim>()
+    .AddPublishers<AddressingKeyForAccountModel>()
+    .AddConsumer<ClaimConsumer, Claim>();
+
+builder.Services.AddHostedService<ClaimsWorker>();
+
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -17,9 +37,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
