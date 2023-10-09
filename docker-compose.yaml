@@ -177,6 +177,8 @@ services:
       timeout: 10s
       retries: 5
       start_period: 40s
+    volumes:
+      - ./scripts/clean-mongo.sh:/scripts/clean-mongo.sh
       
 
   mongo-express:

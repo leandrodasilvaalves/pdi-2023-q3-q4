@@ -106,9 +106,11 @@
         {
             "name": "Many Apis",
             "configurations": [
-                "Vulture (webapi)",
-                "Bacen (webapi)", 
-                "Star Claims (webapi)",   
+                // "Vulture (webapi)",
+                // "Bacen (webapi)", 
+                // "Star Claims (webapi)",   
+                "Star Entries (webapi)",
+                "Star Accounts (webapi)",
             ],
             "stopAll": true
         }
