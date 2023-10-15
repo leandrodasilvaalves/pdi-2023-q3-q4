@@ -1,0 +1,30 @@
+# helm install kafka bitnami/kafka -f kafka.values.yaml
+# helm upgrade kafka bitnami/kafka -f kafka.values.yaml
+
+controller:
+  replicaCount: 1
+
+externalAccess:
+  enabled: true
+  autoDiscovery:
+    enabled: true
+  auth:
+    enabled: false
+rbac:
+  create: true
+
+listeners:
+  client:
+    protocol: PLAINTEXT
+    client:
+      users: []
+  controller:
+    protocol: PLAINTEXT
+  interbroker:
+    protocol: PLAINTEXT
+  external:
+    protocol: PLAINTEXT
+sasl:
+  enabledMechanisms: PLAIN
+
+

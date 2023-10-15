@@ -1,0 +1,18 @@
+replicaCount: 1
+image: leandroalves86.bc
+
+service:
+  type: LoadBalancer
+  port: 80
+
+pod:
+  port: 80
+  liveness: 
+    enabled: true 
+    path: /hc
+  readiness:
+    enabled: false 
+  resources:
+    limits:
+      memory: "300Mi"
+      cpu: "250m"

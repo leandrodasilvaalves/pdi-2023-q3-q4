@@ -49,4 +49,16 @@ metadata:
 EOF
 # Ref: https://kind.sigs.k8s.io/docs/user/loadbalancer/
 
+# kind load docker-image mongo-express --name $CLUSTER_NAME
+# kind load docker-image mongo --name $CLUSTER_NAME
+# kind load docker-image confluentinc/cp-zookeeper:latest --name $CLUSTER_NAME
+# kind load docker-image confluentinc/cp-kafka:latest --name $CLUSTER_NAME
+# kind load docker-image provectuslabs/kafka-ui:latest --name $CLUSTER_NAME
+
+kind load docker-image leandroalves86.bc --name $CLUSTER_NAME
+kind load docker-image leandroalves86.vulture --name $CLUSTER_NAME
+kind load docker-image leandroalves86.star.accounts --name $CLUSTER_NAME
+kind load docker-image leandroalves86.star.entries --name $CLUSTER_NAME
+kind load docker-image leandroalves86.star.claims --name $CLUSTER_NAME
+
 fi

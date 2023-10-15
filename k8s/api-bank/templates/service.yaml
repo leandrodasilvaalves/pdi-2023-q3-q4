@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata: {{ $fullname := printf "%s-%s" .Release.Name .Chart.Name | trunc 63 | trimSuffix "-" }}
+  name: {{ $fullname }}
+  labels:
+    chart: "{{ .Release.Name }}-{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  selector:
+    app: {{ $fullname }}
+  ports:
+  - port: {{ .Values.service.port }}
+    targetPort: {{ .Values.pod.port }}
+  type: {{ .Values.service.type }}

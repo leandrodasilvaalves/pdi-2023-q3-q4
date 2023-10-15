@@ -1,0 +1,11 @@
+# helm install my-kafka-ui kafka-ui/kafka-ui
+
+service:
+  type: LoadBalancer
+  port: 80
+  loadBalancerIP: 172.28.255.210
+yamlApplicationConfig:
+  kafka:
+    clusters:
+      - name: k8s
+        bootstrapServers: kafka.default.svc.cluster.local:9092
