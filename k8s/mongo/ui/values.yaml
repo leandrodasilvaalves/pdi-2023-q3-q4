@@ -1,0 +1,16 @@
+replicaCount: 1
+tag: 1.0.0-alpha.4
+pod:
+  resources:
+    limits:
+      memory: "128Mi"
+      cpu: "500m"
+  port: 8081
+service:
+  type: LoadBalancer
+  port: 80
+mongo:
+  user: root
+  password: root123Mudar
+  service: mongo-mongodb.default.svc.cluster.local
+  port: 27017

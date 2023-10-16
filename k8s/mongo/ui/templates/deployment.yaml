@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {{ $fullname := printf "%s-%s" .Release.Name .Chart.Name | trunc 63 | trimSuffix "-" }}
+  name: {{ $fullname }}-deployment
+  labels:
+    chart: "{{ .Release.Name }}-{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  selector:
+    matchLabels:
+      app: {{ $fullname }}
+  replicas: {{ default 1 .Values.replicaCount | int }}
+  template:
+    metadata:
+      labels:
+        app: {{ $fullname}}
+    spec:
+      containers:
+      - name: {{ $fullname }}
+        image: mongo-express:{{ .Values.tag }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: {{ .Values.pod.port | default 8081 | int }}
+        envFrom:
+        - configMapRef:
+            name: {{ $fullname }}-configmap
+        env:  
+        - name: "MONGODB_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: {{ $fullname }}-secret
+              key: mongodb-password
+        - name: "ME_CONFIG_MONGODB_URL"
+          value: "mongodb://$(MONGODB_USERNAME):$(MONGODB_PASSWORD)@$(MONGO_SERVICE):$(MONGO_PORT)/"
+{{ toYaml .Values.pod.resources | indent 10 }}                 

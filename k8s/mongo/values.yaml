@@ -1,0 +1,33 @@
+# bitnami/mongodb
+# mongodb.default.svc.cluster.local
+
+auth:
+  enabled: true
+  rootUser: root
+  rootPassword: "root123Mudar"
+  usernames: []
+  passwords: []
+  databases: []
+
+
+resources:
+  limits: 
+    cpu: 500m
+    memory: 256Mi
+    
+  requests:
+    cpu: 500m
+    memory: 256Mi
+
+containerPorts:
+  mongodb: 27017
+
+customLivenessProbe: 
+  periodSeconds: 15
+  timeoutSeconds: 10
+  successThreshold: 1
+  failureThreshold: 5
+  initialDelaySeconds: 40
+  exec:
+    command:
+      - echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
