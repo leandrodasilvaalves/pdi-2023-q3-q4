@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata: {{ $fullname := printf "%s-%s" .Release.Name .Chart.Name | trunc 63 | trimSuffix "-" }}
-  name: {{ $fullname }}
+  name: {{ $fullname }}-service
   labels:
     chart: "{{ .Release.Name }}-{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:

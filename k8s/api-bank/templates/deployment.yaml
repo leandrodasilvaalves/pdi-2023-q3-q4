@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata: {{ $fullname := printf "%s-%s" .Release.Name .Chart.Name | trunc 63 | trimSuffix "-" }}
-  name: {{ $fullname }}
+  name: {{ $fullname }}-deployment
   labels:
     chart: "{{ .Release.Name }}-{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
@@ -20,7 +20,18 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: {{ .Values.pod.port | int }}
-        {{- if .Values.pod.liveness.enabled }}
+        envFrom:
+        - configMapRef:
+            name: {{ $fullname }}-configmap
+        env:
+        - name: "MONGODB_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: {{ $fullname }}-secret
+              key: mongodb-password    
+        - name: "Mongo__ConnectionString"
+          value: "mongodb://$(MONGO_USER):$(MONGODB_PASSWORD)@$(MONGO_SERVICE):$(MONGO_PORT)"               
+        {{- if .Values.pod.liveness.enabled }}        
         livenessProbe:
           httpGet:
             path: {{ .Values.pod.liveness.path | default "/"}}

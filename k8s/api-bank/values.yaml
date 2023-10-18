@@ -16,3 +16,13 @@ pod:
     limits:
       memory: "300Mi"
       cpu: "250m"
+
+mongodb:
+  user: root
+  password: root123Mudar
+  service: mongo-mongodb.default.svc.cluster.local
+  port: 27017
+  databasename: bacen
+
+kafka:
+  bootstrapServers: kafka.default.svc.cluster.local:9092

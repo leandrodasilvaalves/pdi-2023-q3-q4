@@ -1,0 +1,12 @@
+kind: ConfigMap
+apiVersion: v1
+metadata: {{ $fullname := printf "%s-%s" .Release.Name .Chart.Name | trunc 63 | trimSuffix "-" }}
+  name: {{ $fullname }}-configmap
+  namespace: default
+data:
+  DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE: "false"
+  MONGO_USER: "{{ .Values.mongodb.user }}"
+  MONGO_SERVICE: "{{ .Values.mongodb.service }}"
+  MONGO_PORT: "{{ .Values.mongodb.port  | default 27017 }}"
+  Mongo__Database: "{{.Values.mongodb.databasename }}" 
+  Kafka__Configuration__BootstrapServers: {{ .Values.kafka.bootstrapServers | quote }}
