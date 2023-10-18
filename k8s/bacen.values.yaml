@@ -26,7 +26,3 @@ mongodb:
 
 kafka:
   bootstrapServers: kafka.default.svc.cluster.local:9092
-
-bacen:
-  enabled: false
-  url: ""

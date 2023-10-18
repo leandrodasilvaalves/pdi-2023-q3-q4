@@ -30,7 +30,11 @@ spec:
               name: {{ $fullname }}-secret
               key: mongodb-password    
         - name: "Mongo__ConnectionString"
-          value: "mongodb://$(MONGO_USER):$(MONGODB_PASSWORD)@$(MONGO_SERVICE):$(MONGO_PORT)"               
+          value: "mongodb://$(MONGO_USER):$(MONGODB_PASSWORD)@$(MONGO_SERVICE):$(MONGO_PORT)" 
+        {{- if .Values.bacen.enabled }}
+        - name: "Bacen__Url"
+          value: "{{ .Values.bacen.url }}"
+        {{- end}}
         {{- if .Values.pod.liveness.enabled }}        
         livenessProbe:
           httpGet:

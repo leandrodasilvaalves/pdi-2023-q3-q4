@@ -1,5 +1,5 @@
 replicaCount: 1
-image: leandroalves86.bc
+image: leandroalves86.vulture
 
 service:
   type: LoadBalancer
@@ -22,11 +22,14 @@ mongodb:
   password: root123Mudar
   service: mongo-mongodb.default.svc.cluster.local
   port: 27017
-  databasename: bacen
+  databasename: vulture
 
 kafka:
   bootstrapServers: kafka.default.svc.cluster.local:9092
 
 bacen:
-  enabled: false
-  url: ""
+  enabled: true
+  url: "http://bacen-api-bank-service.default.svc.cluster.local"
+
+
+# kubectl run -i --tty --rm debug-pod --image=alpine/curl -- sh

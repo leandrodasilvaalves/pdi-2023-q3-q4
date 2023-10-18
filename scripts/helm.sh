@@ -5,7 +5,11 @@ if [[ $1 == *"-i"* ]]; then
     helm install kakfa-ui kafka-ui/kafka-ui -f ./k8s/kafka/ui/values.yaml
     helm install mongo bitnami/mongodb -f ./k8s/mongo/values.yaml
     helm install mongo-express ./k8s/mongo/ui/   
-    helm install bacen ./k8s/api-bank 
+    helm install bacen ./k8s/api-bank -f k8s/bacen.values.yaml
+    helm install vulture k8s/api-bank -f k8s/vulture.values.yaml
+    helm install star-accounts k8s/api-bank -f k8s/star.accounts.values.yaml
+    helm install star-entries k8s/api-bank -f k8s/star.entries.values.yaml
+    helm install star-claims k8s/api-bank -f k8s/star.claims.values.yaml
 fi
 
 if [[ $1 == *"-x"* ]]; then
@@ -14,6 +18,10 @@ if [[ $1 == *"-x"* ]]; then
     helm uninstall mongo 
     helm uninstall mongo-express
     helm uninstall bacen
+    helm uninstall vulture
+    helm uninstall star-accounts
+    helm uninstall star-entries
+    helm uninstall star-claims
 fi
 
 if [[ $1 == *"-u"* ]]; then
@@ -26,7 +34,15 @@ if [[ $1 == *"-u"* ]]; then
     elif [[ $2 == *"mongo-express"* ]]; then
         helm upgrade mongo-express ./k8s/mongo/ui
     elif [[ $2 == *"bacen"* ]]; then 
-        helm upgrade bacen ./k8s/api-bank
+        helm upgrade bacen ./k8s/api-bank -f k8s/bacen.values.yaml
+    elif [[ $2 == *"vulture"* ]]; then
+        helm upgrade vulture k8s/api-bank -f k8s/vulture.values.yaml
+    elif [[ $2 == *"star-accounts"* ]]; then
+        helm upgrade star-accounts k8s/api-bank -f k8s/star.accounts.values.yaml
+    elif [[ $2 == *"star-entries"* ]]; then
+        helm upgrade star-entries k8s/api-bank -f k8s/star.entries.values.yaml
+    elif [[ $2 == *"star-claims"* ]]; then
+        helm upgrade star-claims k8s/api-bank -f k8s/star.claims.values.yaml
     fi
 fi
 
