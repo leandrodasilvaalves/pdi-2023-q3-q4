@@ -1,8 +1,8 @@
 replicaCount: 1
-image: leandroalves86.bc
+image: leandroalves86/bc
 
 service:
-  type: LoadBalancer
+  type: ClusterIP
   port: 80
 
 pod:

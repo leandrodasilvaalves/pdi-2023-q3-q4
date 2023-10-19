@@ -18,7 +18,7 @@ volumes:
 
 services:
   bacen:
-    image: ${PROJECT_NAMESPACE}.bc
+    image: ${PROJECT_NAMESPACE}/bc
     container_name: ${PROJECT_NAME}.bacen
     build:
       context: ./src
@@ -45,7 +45,7 @@ services:
       start_period: 10s
   
   vulture:
-    image: ${PROJECT_NAMESPACE}.vulture
+    image: ${PROJECT_NAMESPACE}/vulture
     container_name: ${PROJECT_NAME}.vulture
     build:
       context: ./src
@@ -73,7 +73,7 @@ services:
       start_period: 10s
 
   star-accounts:
-    image: ${PROJECT_NAMESPACE}.star.accounts
+    image: ${PROJECT_NAMESPACE}/star.accounts
     container_name: ${PROJECT_NAME}.star.accounts
     build:
       context: ./src/
@@ -101,7 +101,7 @@ services:
       start_period: 10s
   
   star-entries:
-    image: ${PROJECT_NAMESPACE}.star.entries
+    image: ${PROJECT_NAMESPACE}/star.entries
     container_name: ${PROJECT_NAME}.star.entries
     build:
       context: ./src/
@@ -129,7 +129,7 @@ services:
       start_period: 10s
   
   star-claims:
-    image: ${PROJECT_NAMESPACE}.star.claims
+    image: ${PROJECT_NAMESPACE}/star.claims
     container_name: ${PROJECT_NAME}.star.claims
     build:
       context: ./src/

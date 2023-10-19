@@ -1,8 +1,8 @@
 replicaCount: 1
-image: leandroalves86.vulture
+image: leandroalves86/vulture
 
 service:
-  type: LoadBalancer
+  type: ClusterIP
   port: 80
 
 pod:

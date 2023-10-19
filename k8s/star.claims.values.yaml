@@ -1,8 +1,8 @@
 replicaCount: 1
-image: leandroalves86.star.claims
+image: leandroalves86/star.claims
 
 service:
-  type: LoadBalancer
+  type: ClusterIP
   port: 80
 
 pod:
