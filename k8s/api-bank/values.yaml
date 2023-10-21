@@ -30,3 +30,7 @@ kafka:
 bacen:
   enabled: false
   url: ""
+
+ingress:
+  enabled: true
+  host: bacen.local

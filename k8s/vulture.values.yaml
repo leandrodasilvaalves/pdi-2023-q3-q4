@@ -31,5 +31,7 @@ bacen:
   enabled: true
   url: "http://bacen-api-bank-service.default.svc.cluster.local"
 
+ingress:
+  host: vulture.leandroalves.dev.br
 
 # kubectl run -i --tty --rm debug-pod --image=alpine/curl -- sh

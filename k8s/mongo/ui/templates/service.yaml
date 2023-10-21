@@ -5,7 +5,11 @@ metadata: {{ $fullname := printf "%s-%s" .Release.Name .Chart.Name | trunc 63 | 
 spec:
   selector:
     app: {{ $fullname }}
-  type: {{ .Values.service.type | default "LoadBalancer"}}
   ports:
   - port: {{ .Values.service.port | default 80 | int }}
     targetPort: {{ .Values.pod.port | int }} 
+  {{- if .Values.ingress.enabled }}
+  type: {{ .Values.service.type | default "ClusterIP"}}
+  {{- else }}
+  type: LoadBalancer
+  {{- end }}

@@ -26,3 +26,6 @@ mongodb:
 
 kafka:
   bootstrapServers: kafka.default.svc.cluster.local:9092
+
+ingress:
+  host: bc.leandroalves.dev.br

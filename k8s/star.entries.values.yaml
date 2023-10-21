@@ -30,3 +30,6 @@ kafka:
 bacen:
   enabled: true
   url: "http://bacen-api-bank-service.default.svc.cluster.local"
+
+ingress:
+  host: star.entries.leandroalves.dev.br

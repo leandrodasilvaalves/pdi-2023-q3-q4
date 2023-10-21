@@ -14,3 +14,6 @@ mongo:
   password: root123Mudar
   service: mongo-mongodb.default.svc.cluster.local
   port: 27017
+ingress:
+  enabled: true
+  host: mongo-express.leandroalves.dev.br

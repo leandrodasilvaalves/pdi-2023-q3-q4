@@ -9,3 +9,7 @@ yamlApplicationConfig:
     clusters:
       - name: k8s
         bootstrapServers: kafka.default.svc.cluster.local:9092
+ingress:
+  enabled: true
+  host: kafka-ui.leandroalves.dev.br
+  ingressClassName: nginx

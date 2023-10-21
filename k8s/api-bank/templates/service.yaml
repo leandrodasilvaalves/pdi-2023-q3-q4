@@ -10,4 +10,8 @@ spec:
   ports:
   - port: {{ .Values.service.port }}
     targetPort: {{ .Values.pod.port }}
-  type: {{ .Values.service.type }}
+  {{- if .Values.ingress.enabled }}
+  type: {{ .Values.service.type | default "ClusterIP"}}
+  {{- else }}
+  type: LoadBalancer
+  {{- end }}
