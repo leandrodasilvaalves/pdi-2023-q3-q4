@@ -6,6 +6,13 @@ service:
   port: 80
 
 pod:
+  initContainer:
+    enabled: true
+    topics:
+      - topic:
+          name: "bacen.entries"
+      - topic:
+          name: "bacen.claims"
   port: 80
   liveness: 
     enabled: true 

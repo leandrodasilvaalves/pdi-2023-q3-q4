@@ -2,10 +2,21 @@ replicaCount: 1
 image: leandroalves86.bc
 
 service:
-  type: LoadBalancer
+  type: ClusterIP
   port: 80
 
 pod:
+  initContainer:
+    enabled: false
+    topics:
+      - topic:
+          name: ""
+          partitions: 1
+          replicationFactor: 1
+      - topic:
+          name: ""
+          partitions: 1
+          replicationFactor: 1
   port: 80
   liveness: 
     enabled: true 

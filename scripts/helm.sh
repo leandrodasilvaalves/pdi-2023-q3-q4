@@ -1,11 +1,11 @@
 #!/bin/bash
 
 if [[ $1 == *"-i"* ]]; then
-    helm install kafka bitnami/kafka -f ./k8s/kafka/values.yaml
-    helm install kakfa-ui kafka-ui/kafka-ui -f ./k8s/kafka/ui/values.yaml
-    helm install mongo bitnami/mongodb -f ./k8s/mongo/values.yaml
-    helm install mongo-express ./k8s/mongo/ui/   
-    helm install bacen ./k8s/api-bank -f k8s/bacen.values.yaml
+    helm install kafka bitnami/kafka -f k8s/kafka/values.yaml
+    helm install kakfa-ui kafka-ui/kafka-ui -f k8s/kafka/ui/values.yaml
+    helm install mongo bitnami/mongodb -f k8s/mongo/values.yaml
+    helm install mongo-express k8s/mongo/ui/   
+    helm install bacen k8s/api-bank -f k8s/bacen.values.yaml
     helm install vulture k8s/api-bank -f k8s/vulture.values.yaml
     helm install star-accounts k8s/api-bank -f k8s/star.accounts.values.yaml
     helm install star-entries k8s/api-bank -f k8s/star.entries.values.yaml

@@ -6,6 +6,13 @@ service:
   port: 80
 
 pod:
+  initContainer:
+    enabled: true
+    topics:
+      - topic:
+          name: "vulture.entries"
+      - topic:
+          name: "vulture.claims"
   port: 80
   liveness: 
     enabled: true 

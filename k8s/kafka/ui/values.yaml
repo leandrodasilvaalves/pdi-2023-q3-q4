@@ -1,9 +1,9 @@
 # helm install my-kafka-ui kafka-ui/kafka-ui
 
 service:
-  type: LoadBalancer
+  type: ClusterIP
   port: 80
-  loadBalancerIP: 172.28.255.210
+  # loadBalancerIP: 172.28.255.210
 yamlApplicationConfig:
   kafka:
     clusters:

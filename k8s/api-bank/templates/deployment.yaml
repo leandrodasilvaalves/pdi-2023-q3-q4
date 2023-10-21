@@ -14,6 +14,21 @@ spec:
       labels:
         app: {{ $fullname }}
     spec:
+      {{- if .Values.pod.initContainer.enabled }}
+      initContainers:
+      - name: init
+        image: confluentinc/cp-zookeeper:latest
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            echo -e 'Creating kafka topics...'
+          {{- range .Values.pod.initContainer.topics }}
+            kafka-topics --bootstrap-server {{ $.Values.kafka.bootstrapServers }} --create --if-not-exists --topic {{ .topic.name }} --replication-factor {{ .topic.replicationFactor }} --partitions {{ .topic.partitions }}
+          {{- end}}
+            echo -e 'Successfully created the following topics:'
+            kafka-topics --bootstrap-server {{ $.Values.kafka.bootstrapServers }} --list        
+      {{- end}}
       containers:
       - name: {{ $fullname }}
         image: "{{ .Values.image }}"

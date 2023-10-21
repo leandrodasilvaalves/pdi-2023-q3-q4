@@ -6,6 +6,11 @@ service:
   port: 80
 
 pod:
+  initContainer:
+    enabled: true
+    topics:
+      - topic:
+          name: "star.entries"
   port: 80
   liveness: 
     enabled: true 

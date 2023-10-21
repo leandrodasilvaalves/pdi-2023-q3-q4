@@ -7,7 +7,7 @@ pod:
       cpu: "500m"
   port: 8081
 service:
-  type: LoadBalancer
+  type: ClusterIP
   port: 80
 mongo:
   user: root
