@@ -476,3 +476,32 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 **/mychart/
+
+# Arquivos e diretórios gerados pelo Terraform
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+
+# Diretórios de recursos gerados por operações de plano e aplicação
+*.tfplan
+*.tfout
+
+# Arquivos de configuração de provedores que podem conter segredos
+*.tfvars
+*.auto.tfvars
+*.secret.tfvars
+
+# Arquivos de variáveis de ambiente
+*.env
+
+# Arquivos de configuração de IDE
+.idea/
+*.code-workspace
+
+# Logs e arquivos temporários
+*.log
+*.log.*
+*.swp
+
+# Excluir qualquer diretório de saída de aplicação personalizado
+output/

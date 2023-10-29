@@ -35,3 +35,10 @@ Configurar `kubectl` para se conectar ao cluster
 ```sh
 aws resourcegroupstaggingapi get-resources --region us-east-2 >> resources.json
 ```
+
+## Terraform
+Configurar `kubectl` para se conectar ao cluster
+```sh
+aws eks --region $(terraform output -raw region) update-kubeconfig \
+    --name $(terraform output -raw cluster_name)
+```
