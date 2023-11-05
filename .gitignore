@@ -505,3 +505,4 @@ terraform.tfstate.backup
 
 # Excluir qualquer diretório de saída de aplicação personalizado
 output/
+ssh/

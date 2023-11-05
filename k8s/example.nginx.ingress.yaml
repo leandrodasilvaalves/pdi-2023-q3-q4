@@ -1,0 +1,159 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-blue-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx-blue
+  template:
+    metadata:
+      labels:
+        app: nginx-blue
+    spec:
+      containers:
+        - name: nginx-blue
+          image: leandroalves86/nginx:blue
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-blue-service
+spec:
+  selector:
+    app: nginx-blue
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: default-ingress-route
+  labels:
+    name: default-ingress-route
+spec:
+  ingressClassName: nginx
+  defaultBackend:
+    service:
+      name: nginx-blue-service
+      port: 
+        number: 80
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-green-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx-green
+  template:
+    metadata:
+      labels:
+        app: nginx-green
+    spec:
+      containers:
+      - name: nginx-green
+        image: leandroalves86/nginx:green
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-green-service
+spec:
+  selector:
+    app: nginx-green
+  ports:
+  - port: 80
+    targetPort: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-green-ingress
+  labels:
+    name: nginx-green-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: green.leandroalves.dev.br
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: nginx-green-service
+            port: 
+              number: 80
+  
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-pink-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx-pink
+  template:
+    metadata:
+      labels:
+        app: nginx-pink
+    spec:
+      containers:
+      - name: nginx-pink
+        image: leandroalves86/nginx:pink
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-pink-service
+spec:
+  selector:
+    app: nginx-pink
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-pink-ingress
+  labels:
+    name: nginx-pink-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: pink.leandroalves.dev.br
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: nginx-pink-service
+            port: 
+              number: 80        
+
