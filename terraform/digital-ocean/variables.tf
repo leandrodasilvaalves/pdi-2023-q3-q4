@@ -38,6 +38,6 @@ variable "k8s_node_count" {
 
 variable "k8s_node_size" {
   type        = string
-  default     = "s-2vcpu-4gb"
+  default     = "s-2vcpu-2gb"
   description = "Informe o tamanho de cada nó do node pool"
 }
