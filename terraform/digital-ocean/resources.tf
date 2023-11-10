@@ -11,6 +11,11 @@ resource "digitalocean_kubernetes_cluster" "pdi-2023-q3-q4" {
   }
 }
 
+resource "local_file" "configure_kubectl" {
+  content  = digitalocean_kubernetes_cluster.pdi-2023-q3-q4.kube_config[0].raw_config
+  filename = pathexpand("~/.kube/do-config.yaml")
+}
+
 resource "helm_release" "ingress-nginx" {
   name             = "nginx-ingress"
   repository       = "https://kubernetes.github.io/ingress-nginx"
@@ -36,7 +41,7 @@ resource "helm_release" "kafka-ui" {
   chart      = "kafka-ui"
   version    = "0.7.5"
   values     = ["${file("../../k8s/kafka/ui/values.yaml")}"]
-  depends_on = [digitalocean_kubernetes_cluster.pdi-2023-q3-q4, helm_release.kafka]
+  depends_on = [digitalocean_kubernetes_cluster.pdi-2023-q3-q4, helm_release.kafka, helm_release.ingress-nginx]
 }
 
 resource "helm_release" "mongodb" {
@@ -51,6 +56,40 @@ resource "helm_release" "mongodb" {
 resource "helm_release" "mongo-express" {
   name       = "mongo-express"
   chart      = "../../k8s/mongo/ui"
-  depends_on = [digitalocean_kubernetes_cluster.pdi-2023-q3-q4, helm_release.mongodb]
+  depends_on = [digitalocean_kubernetes_cluster.pdi-2023-q3-q4, helm_release.mongodb, helm_release.ingress-nginx]
 }
 
+resource "helm_release" "bacen" {
+  name       = "bacen"
+  chart      = "../../k8s/api-bank"
+  values     = ["${file("../../k8s/bacen.values.yaml")}"]
+  depends_on = [helm_release.kafka, helm_release.mongodb]
+}
+
+resource "helm_release" "vulture" {
+  name       = "vulture"
+  chart      = "../../k8s/api-bank"
+  values     = ["${file("../../k8s/vulture.values.yaml")}"]
+  depends_on = [helm_release.bacen]
+}
+
+resource "helm_release" "star-accounts" {
+  name       = "star-accounts"
+  chart      = "../../k8s/api-bank"
+  values     = ["${file("../../k8s/star.accounts.values.yaml")}"]
+  depends_on = [helm_release.bacen]
+}
+
+resource "helm_release" "star-entries" {
+  name       = "star-entries"
+  chart      = "../../k8s/api-bank"
+  values     = ["${file("../../k8s/star.entries.values.yaml")}"]
+  depends_on = [helm_release.bacen]
+}
+
+resource "helm_release" "star-claims" {
+  name       = "star-claims"
+  chart      = "../../k8s/api-bank"
+  values     = ["${file("../../k8s/star.claims.values.yaml")}"]
+  depends_on = [helm_release.bacen]
+}
