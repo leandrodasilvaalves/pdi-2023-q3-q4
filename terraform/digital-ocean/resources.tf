@@ -14,6 +14,7 @@ resource "digitalocean_kubernetes_cluster" "pdi-2023-q3-q4" {
 resource "local_file" "configure_kubectl" {
   content  = digitalocean_kubernetes_cluster.pdi-2023-q3-q4.kube_config[0].raw_config
   filename = pathexpand("~/.kube/do-config.yaml")
+
 }
 
 resource "helm_release" "ingress-nginx" {
@@ -23,7 +24,7 @@ resource "helm_release" "ingress-nginx" {
   version          = "4.5.2"
   namespace        = "ingress-nginx"
   create_namespace = true
-  depends_on       = [digitalocean_kubernetes_cluster.pdi-2023-q3-q4]
+  depends_on       = [local_file.configure_kubectl]
 }
 
 resource "helm_release" "kafka" {
@@ -32,7 +33,7 @@ resource "helm_release" "kafka" {
   chart      = "kafka"
   version    = "26.3.1"
   values     = ["${file("../../k8s/kafka/values.yaml")}"]
-  depends_on = [digitalocean_kubernetes_cluster.pdi-2023-q3-q4]
+  depends_on = [local_file.configure_kubectl]
 }
 
 resource "helm_release" "kafka-ui" {
@@ -41,7 +42,7 @@ resource "helm_release" "kafka-ui" {
   chart      = "kafka-ui"
   version    = "0.7.5"
   values     = ["${file("../../k8s/kafka/ui/values.yaml")}"]
-  depends_on = [digitalocean_kubernetes_cluster.pdi-2023-q3-q4, helm_release.kafka, helm_release.ingress-nginx]
+  depends_on = [local_file.configure_kubectl, helm_release.kafka, helm_release.ingress-nginx]
 }
 
 resource "helm_release" "mongodb" {
@@ -50,20 +51,20 @@ resource "helm_release" "mongodb" {
   chart      = "mongodb"
   version    = "14.2.0"
   values     = ["${file("../../k8s/mongo/values.yaml")}"]
-  depends_on = [digitalocean_kubernetes_cluster.pdi-2023-q3-q4]
+  depends_on = [local_file.configure_kubectl]
 }
 
 resource "helm_release" "mongo-express" {
   name       = "mongo-express"
   chart      = "../../k8s/mongo/ui"
-  depends_on = [digitalocean_kubernetes_cluster.pdi-2023-q3-q4, helm_release.mongodb, helm_release.ingress-nginx]
+  depends_on = [local_file.configure_kubectl, helm_release.mongodb, helm_release.ingress-nginx]
 }
 
 resource "helm_release" "bacen" {
   name       = "bacen"
   chart      = "../../k8s/api-bank"
   values     = ["${file("../../k8s/bacen.values.yaml")}"]
-  depends_on = [helm_release.kafka, helm_release.mongodb]
+  depends_on = [helm_release.kafka, helm_release.mongodb, helm_release.ingress-nginx]
 }
 
 resource "helm_release" "vulture" {
