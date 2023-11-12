@@ -41,3 +41,15 @@ variable "k8s_node_size" {
   default     = "s-2vcpu-2gb"
   description = "Informe o tamanho de cada nó do node pool"
 }
+
+variable "ingress_controller_name" {
+  type        = string
+  default     = "nginx-ingress"
+  description = "Nome do ingress controller"
+}
+
+variable "ingress_controller_namespace" {
+  type        = string
+  default     = "ingress-nginx"
+  description = "Nome do namespace do ingress controller"
+}

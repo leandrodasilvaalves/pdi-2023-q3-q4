@@ -9,17 +9,14 @@ resource "digitalocean_kubernetes_cluster" "pdi-2023-q3-q4" {
     size       = var.k8s_node_size
     node_count = var.k8s_node_count
   }
-}
-
-resource "local_file" "configure_kubectl" {
-  content  = digitalocean_kubernetes_cluster.pdi-2023-q3-q4.kube_config[0].raw_config
-  filename = pathexpand("~/.kube/do-config.yaml")
-
+  destroy_all_associated_resources = true
 }
 
 module "resources_md" {
-  source = "../modules"
+  source         = "../modules/banks"
+  raw_kubeconfig = digitalocean_kubernetes_cluster.pdi-2023-q3-q4.kube_config[0].raw_config
+  dns = "leandroalves.dev.br"
   depends_on = [
-    local_file.configure_kubectl
+    digitalocean_kubernetes_cluster.pdi-2023-q3-q4
   ]
 }

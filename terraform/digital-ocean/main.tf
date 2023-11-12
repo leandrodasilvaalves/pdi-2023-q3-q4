@@ -13,6 +13,6 @@ provider "digitalocean" {
 
 provider "helm" {
   kubernetes {
-    config_path = "${pathexpand("~/.kube/do-config.yaml")}"
+    config_path = pathexpand("~/.kube/do-config.yaml")
   }
 }
