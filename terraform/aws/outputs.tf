@@ -17,3 +17,13 @@ output "cluster_name" {
   description = "Kubernetes cluster name"
   value       = module.eks.cluster_name
 }
+
+output "kubeconfig-certificate-authority-data" {
+  value     = module.eks.cluster_certificate_authority_data
+  sensitive = true
+}
+
+output "kubeconfig" {
+  value     = local.kubeconfig
+  sensitive = true
+}

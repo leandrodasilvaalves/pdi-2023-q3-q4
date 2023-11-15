@@ -15,7 +15,7 @@ resource "digitalocean_kubernetes_cluster" "pdi-2023-q3-q4" {
 module "resources_md" {
   source         = "../modules/banks"
   raw_kubeconfig = digitalocean_kubernetes_cluster.pdi-2023-q3-q4.kube_config[0].raw_config
-  dns = "leandroalves.dev.br"
+  dns            = var.dns
   depends_on = [
     digitalocean_kubernetes_cluster.pdi-2023-q3-q4
   ]
