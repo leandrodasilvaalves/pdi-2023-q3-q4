@@ -1,6 +1,6 @@
-data "aws_availability_zones" "available" {
+data "aws_subnets" "default" {
   filter {
-    name   = "opt-in-status"
-    values = ["opt-in-not-required"]
+    name   = "vpc-id"
+    values = [var.vpc_id]
   }
 }

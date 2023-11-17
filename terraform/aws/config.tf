@@ -5,6 +5,7 @@ resource "random_string" "suffix" {
 
 locals {
   cluster_name = "${var.proj_name}-${random_string.suffix.result}"
+  
   arn_fullname = "arn:aws:eks:${var.region}:${var.account_id}:cluster/${local.cluster_name}"
   kubeconfig   = <<KUBECONFIG
 apiVersion: v1

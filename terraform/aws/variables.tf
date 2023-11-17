@@ -7,7 +7,7 @@ variable "proj_name" {
 variable "region" {
   description = "AWS region"
   type        = string
-  default     = "us-east-1"
+  default     = "us-east-2"
 }
 
 variable "account_id" {
@@ -17,37 +17,43 @@ variable "account_id" {
 }
 
 variable "eks_node_groups_instance_types" {
-  type = list(string)
-  default = [ "t3.medium" ]
+  type        = list(string)
+  default     = ["t3.medium"]
   description = "Tipos de instância do nó"
 }
 
 variable "eks_node_groups_min_size" {
-  type = number
-  default = 1
+  type        = number
+  default     = 1
   description = "Número mínimo de instâncias no nó"
 }
 
 variable "eks_node_groups_max_size" {
-  type = number
-  default = 3
+  type        = number
+  default     = 3
   description = "Número máximo de instâncias no nó"
 }
 
 variable "eks_node_groups_desiredsize" {
-  type = number
-  default = 2
+  type        = number
+  default     = 2
   description = "Número desejadode instâncias no nó"
 }
 
 variable "dns" {
-  type = string
-  default = "leandroalves.dev.br"
+  type        = string
+  default     = "leandroalves.dev.br"
   description = "DNS utilizando no ingress controller dos serviços"
 }
 
 variable "ami_type" {
-    type = string
-  default = "AL2_x86_64"
+  type        = string
+  default     = "AL2_x86_64"
   description = "Tipo de imagem AWS associada com o nó"
+}
+
+variable "vpc_id" {
+  type        = string
+  description = "ID da VPC. Se não informado será usando o default"
+  default     = "vpc-0a687928927179207"//"vpc-00de7d3fcb4f996fb"
 }
