@@ -1,6 +1,3 @@
-
-
-
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "19.15.3"
@@ -28,8 +25,10 @@ module "eks" {
   }
 }
 
-resource "local_file" "configure_kubectl" {
-  content    = local.kubeconfig
-  filename   = pathexpand("~/.kube/do-config.yaml")
+resource "null_resource" "kubeconfig" {
+  provisioner "local-exec" {
+    command = "aws eks --region ${var.region} update-kubeconfig --name ${local.cluster_name}"
+  }
+
   depends_on = [module.eks]
 }

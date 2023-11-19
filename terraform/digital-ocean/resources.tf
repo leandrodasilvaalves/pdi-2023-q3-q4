@@ -12,11 +12,9 @@ resource "digitalocean_kubernetes_cluster" "pdi-2023-q3-q4" {
   destroy_all_associated_resources = true
 }
 
-module "resources_md" {
-  source         = "../modules/banks"
-  raw_kubeconfig = digitalocean_kubernetes_cluster.pdi-2023-q3-q4.kube_config[0].raw_config
-  dns            = var.dns
-  depends_on = [
-    digitalocean_kubernetes_cluster.pdi-2023-q3-q4
-  ]
+resource "null_resource" "kubeconfig" {
+  provisioner "local-exec" {
+    command = "doctl kubernetes cluster kubeconfig save ${digitalocean_kubernetes_cluster.pdi-2023-q3-q4.id} --set-current-context"
+  }
+  depends_on = [digitalocean_kubernetes_cluster.pdi-2023-q3-q4]
 }

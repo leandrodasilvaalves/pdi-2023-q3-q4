@@ -38,12 +38,6 @@ variable "k8s_node_count" {
 
 variable "k8s_node_size" {
   type        = string
-  default     = "s-2vcpu-2gb"
+  default     = "s-2vcpu-4gb"
   description = "Informe o tamanho de cada nó do node pool"
-}
-
-variable "dns" {
-  type = string
-  default = "leandroalves.dev.br"
-  description = "DNS utilizando no ingress controller dos serviços"
 }

@@ -55,5 +55,5 @@ variable "ami_type" {
 variable "vpc_id" {
   type        = string
   description = "ID da VPC. Se não informado será usando o default"
-  default     = "vpc-0a687928927179207"//"vpc-00de7d3fcb4f996fb"
+  default     = "vpc-0a687928927179207"
 }

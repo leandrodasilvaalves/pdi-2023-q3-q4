@@ -4,14 +4,13 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.7.0"
     }
-
     random = {
       source  = "hashicorp/random"
       version = "~> 3.5.1"
     }
-    helm = {
-      source  = "hashicorp/helm"
-      version = "2.11.0"
+    null = {
+      source  = "hashicorp/null"
+      version = "3.2.1"
     }
   }
   required_version = "~> 1.3"
@@ -21,8 +20,4 @@ provider "aws" {
   region = var.region
 }
 
-provider "helm" {
-  kubernetes {
-    config_path = pathexpand("~/.kube/do-config.yaml")
-  }
-}
+provider "null" {}
