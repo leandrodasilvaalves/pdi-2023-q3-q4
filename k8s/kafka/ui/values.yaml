@@ -8,7 +8,7 @@ yamlApplicationConfig:
   kafka:
     clusters:
       - name: k8s
-        bootstrapServers: kafka-service:9092
+        bootstrapServers: kafka-api-bank-service:9092
 ingress:
   enabled: true
   host: kafka-ui.leandroalves.dev.br

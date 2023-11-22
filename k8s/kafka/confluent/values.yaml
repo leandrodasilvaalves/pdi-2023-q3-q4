@@ -1,3 +1,4 @@
+fullname: kafka
 replicaCount: 1
 
 image:

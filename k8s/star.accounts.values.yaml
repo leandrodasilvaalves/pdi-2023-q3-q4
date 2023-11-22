@@ -25,7 +25,7 @@ mongodb:
   databasename: star.accounts
 
 kafka:
-  bootstrapServers: kafka.default.svc.cluster.local:9092
+  bootstrapServers: kafka-api-bank-service:9092
 
 bacen:
   enabled: true

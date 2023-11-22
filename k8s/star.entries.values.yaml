@@ -32,7 +32,7 @@ mongodb:
   databasename: star.entries
 
 kafka:
-  bootstrapServers: kafka-headless.default:9092
+  bootstrapServers: kafka-api-bank-service:9092
 
 bacen:
   enabled: true

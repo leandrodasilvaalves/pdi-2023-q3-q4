@@ -36,7 +36,7 @@ mongodb:
   databasename: bacen
 
 kafka:
-  bootstrapServers: kafka-service:9092
+  bootstrapServers: kafka-api-bank-service:9092
 
 ingress:
   host: bc.leandroalves.dev.br

@@ -5,7 +5,6 @@ metadata:
 spec:
   selector:
     app: {{ include "kafka.fullname" . }}
-spec:
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.port }}
