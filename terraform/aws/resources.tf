@@ -22,7 +22,7 @@ module "eks" {
       max_size       = var.eks_node_groups_max_size
       desired_size   = var.eks_node_groups_desiredsize
     }
-  }
+  }  
 }
 
 resource "null_resource" "kubeconfig" {

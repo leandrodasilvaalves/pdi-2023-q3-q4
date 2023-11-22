@@ -8,15 +8,7 @@ service:
 pod:
   initContainer:
     enabled: false
-    topics:
-      - topic:
-          name: ""
-          partitions: 1
-          replicationFactor: 1
-      - topic:
-          name: ""
-          partitions: 1
-          replicationFactor: 1
+    topics: []
   port: 80
   liveness: 
     enabled: true 
@@ -36,7 +28,7 @@ mongodb:
   databasename: bacen
 
 kafka:
-  bootstrapServers: kafka.default.svc.cluster.local:9092
+  bootstrapServers: kafka-headless.default:9092
 
 bacen:
   enabled: false

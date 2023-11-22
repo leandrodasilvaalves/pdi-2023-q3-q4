@@ -1,0 +1,12 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "kafka.fullname" . }}-configmap
+  namespace: default
+data:
+  KAFKA_BROKER_ID: "1"
+  KAFKA_ZOOKEEPER_CONNECT: "{{ .Values.zookeeper.fullname }}-service:{{ .Values.zookeeper.service.port }}"
+  KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://{{ include "kafka.fullname" . }}-service:{{ .Values.service.port }},PLAINTEXT_HOST://localhost:9093"
+  KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
+  KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
+  KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"

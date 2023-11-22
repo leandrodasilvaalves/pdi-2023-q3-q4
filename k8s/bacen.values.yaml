@@ -11,8 +11,12 @@ pod:
     topics:
       - topic:
           name: "bacen.entries"
+          partitions: 1
+          replicationFactor: 1
       - topic:
           name: "bacen.claims"
+          partitions: 1
+          replicationFactor: 1
   port: 80
   liveness: 
     enabled: true 
@@ -32,7 +36,7 @@ mongodb:
   databasename: bacen
 
 kafka:
-  bootstrapServers: kafka.default.svc.cluster.local:9092
+  bootstrapServers: kafka-service:9092
 
 ingress:
   host: bc.leandroalves.dev.br

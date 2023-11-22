@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "kafka.fullname" . }}
+  labels:
+    chart: "{{ .Release.Name }}-{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "kafka.fullname" . }}
+  replicas: {{ .Values.replicaCount }} 
+  template:
+    metadata:
+      labels:
+        app: {{ include "kafka.fullname" . }}
+    spec:
+      containers:
+        - name: {{ include "kafka.fullname" . }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          ports:
+            - containerPort: {{ .Values.zookeeper.service.port }}
+              name: zookeeper
+            - containerPort: {{ .Values.service.port }}
+              name: kafka
+            - containerPort: 9093
+              name: kafka-host
+          envFrom:
+          - configMapRef:
+              name: {{ include "kafka.fullname" . }}-configmap
