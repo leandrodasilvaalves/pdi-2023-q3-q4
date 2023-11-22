@@ -1,0 +1,5 @@
+namespaceOverride: "nginx-ingress" #todo corrigir namespace. Ta criando no default
+controller:
+  service:
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: leandroalves.dev.br
