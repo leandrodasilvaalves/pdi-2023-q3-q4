@@ -17,6 +17,32 @@ volumes:
     driver: local
 
 services:
+  proxy:
+    image: nginx:latest
+    container_name: ${PROJECT_NAME}.proxy
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 80:80
+    networks:
+      - pdi.infra
+      - pdi.bacen
+      - pdi.vulture
+      - pdi.star
+    cpus: 0.25
+    mem_limit: 128M
+    depends_on:
+      bacen:
+        condition: service_healthy
+      vulture:
+        condition: service_healthy
+      # star-accounts:
+      #   condition: service_healthy
+      star-entries:
+        condition: service_healthy
+      star-claims:
+        condition: service_healthy
+      
   bacen:
     image: ${PROJECT_NAMESPACE}/bc
     container_name: ${PROJECT_NAME}.bacen
