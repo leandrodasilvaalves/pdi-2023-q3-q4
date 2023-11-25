@@ -36,8 +36,8 @@ services:
         condition: service_healthy
       vulture:
         condition: service_healthy
-      # star-accounts:
-      #   condition: service_healthy
+      star-accounts:
+        condition: service_healthy
       star-entries:
         condition: service_healthy
       star-claims:

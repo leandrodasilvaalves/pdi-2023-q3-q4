@@ -2,8 +2,6 @@ using System.Text.Json.Serialization;
 using Shared.Contracts.Models;
 using Shared.Entities;
 using Shared.Extensions;
-using Star.Claims.Consumers;
-using Star.Claims.Workers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,11 +20,9 @@ builder.Services.AddStarValidators();
 builder.Services.AddBacenHttpClients(builder.Configuration);
 builder.Services.ConfigureKafka(builder.Configuration, "Kafka")
     .AddPublishers<Claim>()
-    .AddPublishers<AddressingKeyForAccountModel>()
-    .AddConsumer<ClaimConsumer, Claim>();
+    .AddPublishers<AddressingKeyForAccountModel>();
 
-builder.Services.AddHostedService<ClaimsWorker>();
-
+builder.Services.AddWorkers();
 
 var app = builder.Build();
 

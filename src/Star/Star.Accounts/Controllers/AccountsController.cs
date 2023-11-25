@@ -57,7 +57,7 @@ namespace Star.Accounts.Controllers
             if (account is null)
                 return NotFound(new Response<List<AddressingKey>>(KnownErrors.ACCOUNT_DOES_NOT_EXISTIS));
 
-            if (account.AddressingKeys is null)
+            if (account.AddressingKeys is null || account.AddressingKeys.Count == 0)
                 return UnprocessableEntity(new Response<List<AddressingKey>>(KnownErrors.DOES_NOT_HAVE_ADDRESSING_KEYS));
 
             return Ok(new Response<List<AddressingKey>>(account.AddressingKeys));

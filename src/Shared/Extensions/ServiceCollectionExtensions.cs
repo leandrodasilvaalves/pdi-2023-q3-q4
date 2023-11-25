@@ -7,6 +7,7 @@ using Shared.HttpClients;
 using Shared.Repositories;
 using Shared.Validations;
 using Shared.Validations.Rules;
+using Shared.Workers;
 
 namespace Shared.Extensions
 {
@@ -15,6 +16,7 @@ namespace Shared.Extensions
         public static IServiceCollection ConfigureOptions(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<MongoOptions>(configuration.GetSection(MongoOptions.SectionName));
+            services.Configure<WorkerOptions>(configuration.GetSection(WorkerOptions.SectionName));
             return services;
         }
 
@@ -53,6 +55,12 @@ namespace Shared.Extensions
             services.AddRefitClient<IBacenAccountClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(bacenUrlBase));
             services.AddRefitClient<IBacenEntryClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(bacenUrlBase));
             services.AddRefitClient<IBacenClaimClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(bacenUrlBase));
+            return services;
+        }
+
+        public static IServiceCollection AddWorkers(this IServiceCollection services)
+        {
+            services.AddHostedService<ClaimsWorker>();
             return services;
         }
     }
