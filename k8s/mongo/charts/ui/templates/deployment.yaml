@@ -1,34 +1,36 @@
+{{- if .Values.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
-metadata: {{ $fullname := printf "%s-%s" .Release.Name .Chart.Name | trunc 63 | trimSuffix "-" }}
-  name: {{ $fullname }}-deployment
+metadata: 
+  name: {{ include "mongo-express.fullname" . }}-deployment
   labels:
     chart: "{{ .Release.Name }}-{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
   selector:
     matchLabels:
-      app: {{ $fullname }}
+      app: {{ include "mongo-express.fullname" . }}
   replicas: {{ default 1 .Values.replicaCount | int }}
   template:
     metadata:
       labels:
-        app: {{ $fullname}}
+        app: {{ include "mongo-express.fullname" . }}
     spec:
       containers:
-      - name: {{ $fullname }}
-        image: mongo-express:{{ .Values.tag }}
+      - name: {{ include "mongo-express.fullname" . }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: {{ .Values.pod.port | default 8081 | int }}
         envFrom:
         - configMapRef:
-            name: {{ $fullname }}-configmap
+            name: {{ include "mongo-express.fullname" . }}-configmap
         env:  
         - name: "MONGODB_PASSWORD"
           valueFrom:
             secretKeyRef:
-              name: {{ $fullname }}-secret
+              name: {{ include "mongo-express.fullname" . }}-secret
               key: mongodb-password
         - name: "ME_CONFIG_MONGODB_URL"
           value: "mongodb://$(MONGODB_USERNAME):$(MONGODB_PASSWORD)@$(MONGO_SERVICE):$(MONGO_PORT)/"
 {{ toYaml .Values.pod.resources | indent 10 }}                 
+{{- end -}}

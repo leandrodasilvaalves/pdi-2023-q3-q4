@@ -31,7 +31,7 @@ pod:
 mongodb:
   user: root
   password: root123Mudar
-  service: mongo-mongodb.default.svc.cluster.local
+  service: mongo-service.default.svc.cluster.local
   port: 27017
   databasename: vulture
 

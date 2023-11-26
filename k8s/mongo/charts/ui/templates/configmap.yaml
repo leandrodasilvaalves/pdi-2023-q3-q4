@@ -1,0 +1,10 @@
+{{- if .Values.enabled -}}
+kind: ConfigMap
+apiVersion: v1
+metadata: 
+  name: {{ include "mongo-express.fullname" . }}-configmap
+data:
+  MONGODB_USERNAME: {{ toString .Values.mongo.user | quote }}
+  MONGO_SERVICE: {{ toString .Values.mongo.servicename | quote }}
+  MONGO_PORT: {{ toString .Values.mongo.port | default 27017 | int | toString | quote }}
+{{ end }}
