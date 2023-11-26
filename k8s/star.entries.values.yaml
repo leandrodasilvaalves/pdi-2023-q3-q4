@@ -1,3 +1,4 @@
+fullname: "star-entries"
 replicaCount: 1
 image: leandroalves86/star.entries
 
@@ -36,7 +37,7 @@ kafka:
 
 bacen:
   enabled: true
-  url: "http://bacen-api-bank-service.default.svc.cluster.local"
+  url: "http://bacen-service.default.svc.cluster.local"
 
 ingress:
   host: star.entries.leandroalves.dev.br

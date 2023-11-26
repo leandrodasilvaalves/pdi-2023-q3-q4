@@ -1,3 +1,4 @@
+fullname: "bacen"
 replicaCount: 1
 image: leandroalves86/bc
 

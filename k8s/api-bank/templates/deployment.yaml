@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
-metadata: {{ $fullname := printf "%s-%s" .Release.Name .Chart.Name | trunc 63 | trimSuffix "-" }}
-  name: {{ $fullname }}-deployment
+metadata: 
+  name: {{ include "apibank.fullname" . }}-deployment
   labels:
     chart: "{{ .Release.Name }}-{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
   selector:
     matchLabels:
-      app: {{ $fullname }}
+      app: {{ include "apibank.fullname" . }}
   replicas: {{ default 1 .Values.replicaCount | int }}
   template:
     metadata:
       labels:
-        app: {{ $fullname }}
+        app: {{ include "apibank.fullname" . }}
     spec:
       {{- if .Values.pod.initContainer.enabled }}
       initContainers:
@@ -30,19 +30,19 @@ spec:
             kafka-topics --bootstrap-server {{ $.Values.kafka.bootstrapServers }} --list        
       {{- end}}
       containers:
-      - name: {{ $fullname }}
+      - name: {{ include "apibank.fullname" . }}
         image: "{{ .Values.image }}"
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: {{ .Values.pod.port | int }}
         envFrom:
         - configMapRef:
-            name: {{ $fullname }}-configmap
+            name: {{ include "apibank.fullname" . }}-configmap
         env:
         - name: "MONGODB_PASSWORD"
           valueFrom:
             secretKeyRef:
-              name: {{ $fullname }}-secret
+              name: {{ include "apibank.fullname" . }}-secret
               key: mongodb-password    
         - name: "Mongo__ConnectionString"
           value: "mongodb://$(MONGO_USER):$(MONGODB_PASSWORD)@$(MONGO_SERVICE):$(MONGO_PORT)" 

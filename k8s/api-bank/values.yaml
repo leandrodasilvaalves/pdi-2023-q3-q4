@@ -1,3 +1,4 @@
+fullname: "apibank"
 replicaCount: 1
 image: leandroalves86.bc
 

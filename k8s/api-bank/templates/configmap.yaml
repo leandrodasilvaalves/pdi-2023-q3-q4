@@ -1,7 +1,7 @@
 kind: ConfigMap
 apiVersion: v1
-metadata: {{ $fullname := printf "%s-%s" .Release.Name .Chart.Name | trunc 63 | trimSuffix "-" }}
-  name: {{ $fullname }}-configmap
+metadata: 
+  name: {{ include "apibank.fullname" . }}-configmap
   namespace: default
 data:
   DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE: "false"
