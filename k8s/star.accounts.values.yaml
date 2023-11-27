@@ -8,11 +8,11 @@ service:
 
 pod:
   port: 80
-  liveness: 
-    enabled: true 
+  liveness:
+    enabled: true
     path: /hc
   readiness:
-    enabled: false 
+    enabled: false
   resources:
     limits:
       memory: "300Mi"
