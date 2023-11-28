@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "webserver.fullname" . }}-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "webserver.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "webserver.fullname" . }}
+    spec:
+      containers:
+      - name: {{ include "webserver.fullname" . }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"        
+        ports:
+        - containerPort: {{ .Values.service.internalPort }}
+        resources:  
+{{ toYaml .Values.resources | indent 10 }}     

@@ -1,0 +1,8 @@
+image:
+  repository: "leandroalves86/nginx"
+  tag: "pink"
+
+fullname: "nginx-pink"
+
+ingress:
+  host: "pink.leandroalves.dev.br"

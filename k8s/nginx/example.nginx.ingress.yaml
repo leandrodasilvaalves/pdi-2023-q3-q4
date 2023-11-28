@@ -155,5 +155,4 @@ spec:
           service:
             name: nginx-pink-service
             port: 
-              number: 80        
-
+              number: 80  

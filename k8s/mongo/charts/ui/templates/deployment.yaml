@@ -32,5 +32,6 @@ spec:
               key: mongodb-password
         - name: "ME_CONFIG_MONGODB_URL"
           value: "mongodb://$(MONGODB_USERNAME):$(MONGODB_PASSWORD)@$(MONGO_SERVICE):$(MONGO_PORT)/"
+        resources:
 {{ toYaml .Values.pod.resources | indent 10 }}                 
 {{- end -}}
