@@ -22,7 +22,13 @@ nodes:
     protocol: TCP
 EOF
 
+  echo installing ingress ...
   kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+
+  #https://github.com/kubernetes-sigs/metrics-server
+  echo installing metrics server ...
+  kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
 
   echo waiting ...
   kubectl wait --namespace ingress-nginx \

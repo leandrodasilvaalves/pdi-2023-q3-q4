@@ -10,6 +10,7 @@ spec:
     metadata:
       labels:
         app: {{ include "webserver.fullname" . }}
+        type: webserver
     spec:
       containers:
       - name: {{ include "webserver.fullname" . }}

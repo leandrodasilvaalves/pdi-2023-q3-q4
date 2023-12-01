@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: load-generator
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: load-generator
+  template:
+    metadata:
+      labels:
+        app: load-generator
+    spec:
+      containers:
+      - name: load-generator
+        image: busybox:1.28
+        resources:
+          limits:
+            memory: "25Mi"
+            cpu: "100m"
+          requests:
+            memory: "25Mi"
+            cpu: "100m"
+        command:
+        - /bin/sh
+        - -c
+        - |
+          while sleep 0.01;
+          do 
+            wget -q -O- htt://nginx-blue-service
+            wget -q -O- http://nginx-pink-service
+          done
