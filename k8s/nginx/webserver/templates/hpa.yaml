@@ -9,16 +9,29 @@ spec:
     name: {{ include "webserver.fullname" . }}-deployment
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: {{ .Values.autoscaling.stabilizationWindowSeconds }}
+      policies:
+      - type: Percent
+        value: {{ .Values.autoscaling.cpuUtilization }}
+        periodSeconds: {{ .Values.autoscaling.policiesPeriodSeconds }}
+    scaleUp:
+      stabilizationWindowSeconds: {{ .Values.autoscaling.stabilizationWindowSeconds }}
+      policies:
+      - type: Percent
+        value: {{ .Values.autoscaling.cpuUtilization }}
+        periodSeconds: {{ .Values.autoscaling.policiesPeriodSeconds }}
   metrics:
   - type: Resource
     resource:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
+        averageUtilization: {{ .Values.autoscaling.cpuUtilization }}
   - type: Resource
     resource:
       name: memory
       target:
         type: Utilization
-        averageUtilization:  {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
+        averageUtilization:  {{ .Values.autoscaling.memoryUtilization }}

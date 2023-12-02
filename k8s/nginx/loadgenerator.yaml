@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: load-generator
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: load-generator
@@ -28,6 +28,6 @@ spec:
         - |
           while sleep 0.01;
           do 
-            wget -q -O- htt://nginx-blue-service
+            wget -q -O- http://nginx-blue-service
             wget -q -O- http://nginx-pink-service
           done

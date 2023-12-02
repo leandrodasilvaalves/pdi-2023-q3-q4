@@ -10,3 +10,5 @@ do
   wget -q -O- http://pink.leandroalves.dev.br
 done
 ```
+# Reference HPA
+- https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/

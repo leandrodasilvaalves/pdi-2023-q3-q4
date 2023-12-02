@@ -6,3 +6,12 @@ fullname: "nginx-pink"
 
 ingress:
   host: "pink.leandroalves.dev.br"
+
+resources:
+  requests:
+    cpu: 5m
+    memory: 7Mi
+
+autoscaling:
+  stabilizationWindowSeconds: 15
+  policiesPeriodSeconds: 5

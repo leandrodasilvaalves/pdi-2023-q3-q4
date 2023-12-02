@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "webserver.fullname" . }}-deployment
 spec:
+  replicas: {{ .Values.autoscaling.minReplicas }}
   selector:
     matchLabels:
       app: {{ include "webserver.fullname" . }}
